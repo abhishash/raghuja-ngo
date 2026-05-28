@@ -52,7 +52,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
 
   return (
     <div
-      className="relative w-full h-[500px] md:h-[600px] overflow-hidden group"
+      className="relative w-full aspect-[16/9] md:h-[500px] overflow-hidden group"
       onMouseEnter={() => setAutoPlay(false)}
       onMouseLeave={() => setAutoPlay(true)}
     >
@@ -60,15 +60,14 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       {slides.map((slide, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-opacity duration-500 ${
-            index === current ? 'opacity-100' : 'opacity-0'
-          }`}
+          className={`absolute inset-0 transition-opacity duration-500 ${index === current ? 'opacity-100' : 'opacity-0'
+            }`}
         >
           <Image
             src={`${imageBaseUrl}${slide.image}`}
             alt={slide.name}
             fill
-            className="object-cover"
+            className="object-fill"
             priority={index === 0}
           />
         </div>
@@ -77,14 +76,14 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all z-10 opacity-0 group-hover:opacity-100"
+        className="absolute cursor-pointer left-4 top-1/2 transform -translate-y-1/2 bg-teal-600 hover:bg-teal-700 text-white p-2 rounded-full transition-all z-10 opacity-0 group-hover:opacity-100"
         aria-label="Previous slide"
       >
         <ChevronLeft size={24} />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/30 hover:bg-white/50 text-white p-2 rounded-full transition-all z-10 opacity-0 group-hover:opacity-100"
+        className="absolute cursor-pointer right-4 top-1/2 transform -translate-y-1/2 bg-teal-600 hover:bg-teal-700 text-white p-2 rounded-full transition-all z-10 opacity-0 group-hover:opacity-100"
         aria-label="Next slide"
       >
         <ChevronRight size={24} />
@@ -96,9 +95,8 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-3 h-3 rounded-full transition-all ${
-              index === current ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/75'
-            }`}
+            className={`w-3 h-3 rounded-full transition-all ${index === current ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/75'
+              }`}
             aria-label={`Go to slide ${index + 1}`}
           />
         ))}

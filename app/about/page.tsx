@@ -32,7 +32,7 @@ export default function About() {
     {
       year: '2015',
       title: 'Foundation started',
-      description: 'RAGHUJA SOCIALWELFARE Foundation began with a clear commitment to improve access to prosthetic care and restore independence.',
+      description: 'Raghuja SocialWelfare Foundationbegan with a clear commitment to improve access to prosthetic care and restore independence.',
       icon: Rocket,
     },
     {
@@ -348,7 +348,7 @@ export default function About() {
                   </div>
 
                   <p className="relative text-lg leading-relaxed text-gray-700">
-                    RAGHUJA SOCIALWELFARE Foundation was created with the
+                    Raghuja SocialWelfare Foundationwas created with the
                     belief that mobility is more than movement. It is confidence,
                     participation, livelihood, and dignity.
                   </p>

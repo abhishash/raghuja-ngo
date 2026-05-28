@@ -1,12 +1,12 @@
 // Mock data for NGO website
 
 export const ngoInfo = {
-  name: 'RAGHUJA SOCIALWELFARE Foundation',
+  name: 'Raghuja SocialWelfare Foundation',
   tagline: 'Enhancing mobility and functionality with advanced technology.',
   mission: 'Challenging disabilities, enabling lives through innovative prosthetic technology and rehabilitation services.',
   vision: 'A world where individuals with disabilities have access to quality prosthetic limbs and rehabilitation services.',
   founded: 2015,
-  description: 'RAGHUJA SOCIALWELFARE Foundation is a non-profit organization dedicated to providing advanced prosthetic limbs and rehabilitation services to individuals with disabilities.',
+  description: 'Raghuja SocialWelfare Foundationis a non-profit organization dedicated to providing advanced prosthetic limbs and rehabilitation services to individuals with disabilities.',
   contact: {
     email: 'info@raghujafoundation.org',
     phone: '+91 7906948573',
@@ -20,27 +20,33 @@ export const services = [
     title: 'Prosthetic Limbs',
     description: 'Advanced prosthetic limbs with cutting-edge technology',
     icon: '🦿',
-    longDescription: 'We provide state-of-the-art prosthetic limbs designed to enhance mobility and restore confidence in individuals with limb disabilities.',
+    longDescription:
+      'We provide state-of-the-art prosthetic limbs designed to enhance mobility and restore confidence in individuals with limb disabilities.',
     impact: '3000+ limbs provided',
-    image: '/api/placeholder/400/300'
+    image:
+      'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop'
   },
   {
     id: 2,
     title: 'Rehabilitation Services',
     description: 'Comprehensive rehabilitation and physical therapy',
     icon: '⚕️',
-    longDescription: 'Our rehabilitation programs include physiotherapy, occupational therapy, and vocational training to help individuals regain independence.',
+    longDescription:
+      'Our rehabilitation programs include physiotherapy, occupational therapy, and vocational training to help individuals regain independence.',
     impact: '5000+ individuals rehabilitated',
-    image: '/api/placeholder/400/300'
+    image:
+      'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1200&auto=format&fit=crop'
   },
   {
     id: 3,
     title: 'Training & Support',
     description: 'Skill development and community support programs',
     icon: '🎓',
-    longDescription: 'We offer training programs and ongoing support to ensure individuals can live fulfilling, independent lives.',
+    longDescription:
+      'We offer training programs and ongoing support to ensure individuals can live fulfilling, independent lives.',
     impact: '2000+ trained beneficiaries',
-    image: '/api/placeholder/400/300'
+    image:
+      'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=1200&auto=format&fit=crop'
   }
 ]
 

@@ -30,7 +30,7 @@ export function Navbar() {
               <div className="w-12 h-12 relative">
                 <Image
                   src="/logo.jpeg"
-                  alt="RAGHUJA SOCIALWELFARE Foundation Logo"
+                  alt="Raghuja SocialWelfare FoundationLogo"
                   width={48}
                   height={48}
                   className="object-contain"
