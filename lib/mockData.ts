@@ -8,9 +8,9 @@ export const ngoInfo = {
   founded: 2015,
   description: 'RAGHUJA SOCIALWELFARE Foundation is a non-profit organization dedicated to providing advanced prosthetic limbs and rehabilitation services to individuals with disabilities.',
   contact: {
-    email: 'info@inalifoundation.org',
-    phone: '+91 9876543210',
-    address: '123 Healthcare Lane, Bangalore, India'
+    email: 'info@raghujafoundation.org',
+    phone: '+91 7906948573',
+    address: 'Rama Healthcare Lane, Agra, India'
   }
 }
 
@@ -100,28 +100,28 @@ export const teamMembers = [
     id: 1,
     name: 'Priya Kumar',
     role: 'Founder & Executive Director',
-    image: '/api/placeholder/300/300',
+    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=300&h=300&fit=crop',
     bio: 'Social entrepreneur with 15+ years of experience in NGO sector'
   },
   {
     id: 2,
     name: 'Amit Sharma',
     role: 'Head of Operations',
-    image: '/api/placeholder/300/300',
+    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=300&h=300&fit=crop',
     bio: 'Passionate about sustainable development and community welfare'
   },
   {
     id: 3,
     name: 'Neha Patel',
     role: 'Education Program Head',
-    image: '/api/placeholder/300/300',
+    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=300&h=300&fit=crop',
     bio: 'Dedicated to transforming lives through quality education'
   },
   {
     id: 4,
     name: 'Rajesh Singh',
     role: 'Healthcare Coordinator',
-    image: '/api/placeholder/300/300',
+    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=300&h=300&fit=crop',
     bio: 'Medical professional committed to accessible healthcare'
   }
 ]
@@ -133,75 +133,93 @@ export const events = [
     date: '2024-06-15',
     time: '18:00',
     location: 'Grand Hotel, New Delhi',
-    description: 'Join us for an evening of celebration and giving back',
-    image: '/api/placeholder/400/300',
-    attendees: 250
+    description:
+      'Join us for an evening of celebration, donor appreciation, and community impact stories supporting healthcare and education initiatives.',
+    image:
+      'https://images.unsplash.com/photo-1511578314322-379afb476865?q=80&w=1200&auto=format&fit=crop',
+    attendees: 250,
   },
+
   {
     id: 2,
     title: 'Education Summit 2024',
     date: '2024-07-20',
     time: '09:00',
     location: 'Convention Center, Mumbai',
-    description: 'Discussing innovations in education for underprivileged children',
-    image: '/api/placeholder/400/300',
-    attendees: 500
+    description:
+      'Discussing innovation, digital learning, and equal educational opportunities for underserved children and communities.',
+    image:
+      'https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=1200&auto=format&fit=crop',
+    attendees: 500,
   },
+
   {
     id: 3,
     title: 'Health Awareness Week',
     date: '2024-08-01',
     time: '10:00',
     location: 'Multiple Locations',
-    description: 'Free health checkups and awareness programs',
-    image: '/api/placeholder/400/300',
-    attendees: 1000
+    description:
+      'Free medical checkups, awareness drives, rehabilitation support, and healthcare education programs for families.',
+    image:
+      'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop',
+    attendees: 1000,
   },
+
   {
     id: 4,
     title: 'Community Outreach Program',
     date: '2024-09-10',
     time: '14:00',
     location: 'Rural District',
-    description: 'Food distribution and medical camps',
-    image: '/api/placeholder/400/300',
-    attendees: 150
-  }
+    description:
+      'Food distribution drives, medical camps, and community engagement programs helping families in need.',
+    image:
+      'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop',
+    attendees: 150,
+  },
 ]
 
 export const vlogs = [
   {
     id: 1,
     title: 'A Day in the Life of Our Scholars',
-    thumbnail: '/api/placeholder/400/225',
+    thumbnail:
+      'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop',
     videoId: 'dQw4w9WgXcQ',
     views: 2500,
-    date: '2024-05-20'
+    date: '2024-05-20',
   },
+
   {
     id: 2,
     title: 'Impact of Our Healthcare Program',
-    thumbnail: '/api/placeholder/400/225',
+    thumbnail:
+      'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop',
     videoId: 'dQw4w9WgXcQ',
     views: 1800,
-    date: '2024-05-15'
+    date: '2024-05-15',
   },
+
   {
     id: 3,
     title: 'Building Hope: Our Education Initiative',
-    thumbnail: '/api/placeholder/400/225',
+    thumbnail:
+      'https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=1200&auto=format&fit=crop',
     videoId: 'dQw4w9WgXcQ',
     views: 3200,
-    date: '2024-05-10'
+    date: '2024-05-10',
   },
+
   {
     id: 4,
     title: 'Stories of Change & Transformation',
-    thumbnail: '/api/placeholder/400/225',
+    thumbnail:
+      'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop',
     videoId: 'dQw4w9WgXcQ',
     views: 4100,
-    date: '2024-05-05'
-  }
+    date: '2024-05-05',
+  },
 ]
 
 export const donationReceipt = {

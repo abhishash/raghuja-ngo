@@ -1,17 +1,26 @@
 'use client'
 
+import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
-import Link from 'next/link'
 import { campaigns } from '@/lib/mockData'
-import { ArrowLeft, Heart } from 'lucide-react'
+import {
+  ArrowLeft,
+  Heart,
+  Users,
+  ShieldCheck,
+  Sparkles,
+  CheckCircle2,
+} from 'lucide-react'
 
 export default function Donate() {
   const searchParams = useSearchParams()
   const router = useRouter()
+
   const selectedCampaignId = searchParams.get('campaign')
-  const selectedCampaign = selectedCampaignId 
-    ? campaigns.find(c => c.id === parseInt(selectedCampaignId))
+
+  const selectedCampaign = selectedCampaignId
+    ? campaigns.find((c) => c.id === parseInt(selectedCampaignId))
     : null
 
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
@@ -35,78 +44,331 @@ export default function Donate() {
     setSelectedAmount(null)
   }
 
-  const finalAmount = customAmount ? parseInt(customAmount) : selectedAmount
+  const finalAmount = customAmount
+    ? parseInt(customAmount)
+    : selectedAmount
 
   const handleProceedToPayment = () => {
     if (!selectedCampaign || !finalAmount) return
-    router.push(`/donate/checkout?campaign=${selectedCampaign.id}&amount=${finalAmount}`)
+
+    router.push(
+      `/donate/checkout?campaign=${selectedCampaign.id}&amount=${finalAmount}`
+    )
   }
 
   return (
-    <main>
-      {/* Hero Section */}
-      <section className="bg-gradient-to-br from-primary/10 to-accent/10 py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6">Make a Donation</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl">
-            Your generous contribution helps us transform lives and build stronger communities
-          </p>
+    <main className="overflow-hidden bg-white">
+      {/* HERO */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-cyan-50 px-4 py-28">
+        
+        {/* Background Blur */}
+        <div className="absolute -left-20 top-0 h-80 w-80 rounded-full bg-teal-300/20 blur-3xl"></div>
+        <div className="absolute bottom-0 right-0 h-[30rem] w-[30rem] rounded-full bg-cyan-300/20 blur-3xl"></div>
+
+        <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
+          
+          {/* LEFT */}
+          <div>
+            <div className="inline-flex items-center rounded-full border border-teal-200 bg-white/70 px-5 py-2 shadow-sm backdrop-blur-md">
+              <Heart className="mr-2 text-teal-700" size={16} />
+
+              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-700">
+                Donate & Support
+              </span>
+            </div>
+
+            <h1 className="mt-8 text-5xl font-black leading-tight text-gray-950 md:text-7xl">
+              Every donation creates real change
+            </h1>
+
+            <p className="mt-8 max-w-2xl text-xl leading-relaxed text-gray-600">
+              Help us provide education, healthcare, food support,
+              and rehabilitation services to underserved communities.
+            </p>
+
+            {/* Features */}
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              
+              <div className="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
+                <ShieldCheck className="text-teal-700" size={28} />
+
+                <p className="mt-4 font-bold text-gray-950">
+                  Secure Payments
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
+                <Users className="text-teal-700" size={28} />
+
+                <p className="mt-4 font-bold text-gray-950">
+                  Trusted NGO
+                </p>
+              </div>
+
+              <div className="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
+                <Sparkles className="text-teal-700" size={28} />
+
+                <p className="mt-4 font-bold text-gray-950">
+                  Real Impact
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* RIGHT IMAGE */}
+          <div className="relative">
+            <div className="relative overflow-hidden rounded-[2.5rem] shadow-2xl">
+              <Image
+                src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1400&auto=format&fit=crop"
+                alt="Donation Impact"
+                width={900}
+                height={700}
+                className="h-[550px] w-full object-cover"
+              />
+
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+
+              {/* Floating Card */}
+              <div className="absolute bottom-8 left-8 rounded-3xl bg-white/20 p-6 shadow-2xl backdrop-blur-xl">
+                <p className="text-sm font-semibold uppercase tracking-wide text-teal-100">
+                  Lives Impacted
+                </p>
+
+                <h3 className="mt-2 text-5xl font-black text-white">
+                  25K+
+                </h3>
+
+                <p className="mt-2 text-white/80">
+                  Children & families supported
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Main Content */}
-      <section className="py-20 px-4 bg-background">
-        <div className="max-w-5xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Progress Steps */}
-            <div className="md:col-span-1">
-              <div className="sticky top-24">
-                <div className="space-y-4">
-                  <div className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${step >= 1 ? 'border-primary bg-primary/10' : 'border-border'}`} onClick={() => setStep(1)}>
-                    <p className="font-bold text-sm">Step 1</p>
-                    <p>Select Campaign</p>
+      {/* MAIN CONTENT */}
+      <section className="bg-white px-4 py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
+            
+            {/* SIDEBAR */}
+            <div>
+              <div className="sticky top-24 overflow-hidden rounded-[2rem] border border-white/40 bg-gradient-to-br from-slate-50 to-white p-8 shadow-xl">
+                
+                <h3 className="text-2xl font-bold text-gray-950">
+                  Donation Steps
+                </h3>
+
+                <div className="mt-10 space-y-5">
+                  
+                  {/* Step */}
+                  <div
+                    onClick={() => setStep(1)}
+                    className={`group cursor-pointer rounded-3xl border-2 p-5 transition-all ${
+                      step >= 1
+                        ? 'border-teal-600 bg-teal-50'
+                        : 'border-gray-200 bg-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold ${
+                          step >= 1
+                            ? 'bg-teal-600 text-white'
+                            : 'bg-gray-100 text-gray-500'
+                        }`}
+                      >
+                        1
+                      </div>
+
+                      <div>
+                        <p className="font-bold text-gray-950">
+                          Select Campaign
+                        </p>
+
+                        <p className="text-sm text-gray-500">
+                          Choose your cause
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${step >= 2 ? 'border-primary bg-primary/10' : 'border-border'}`} onClick={() => selectedCampaign && setStep(2)}>
-                    <p className="font-bold text-sm">Step 2</p>
-                    <p>Choose Amount</p>
+
+                  {/* Step */}
+                  <div
+                    className={`rounded-3xl border-2 p-5 transition-all ${
+                      step >= 2
+                        ? 'border-teal-600 bg-teal-50'
+                        : 'border-gray-200 bg-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold ${
+                          step >= 2
+                            ? 'bg-teal-600 text-white'
+                            : 'bg-gray-100 text-gray-500'
+                        }`}
+                      >
+                        2
+                      </div>
+
+                      <div>
+                        <p className="font-bold text-gray-950">
+                          Donation Amount
+                        </p>
+
+                        <p className="text-sm text-gray-500">
+                          Select contribution
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                  <div className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${step >= 3 ? 'border-primary bg-primary/10' : 'border-border'}`} onClick={() => finalAmount && setStep(3)}>
-                    <p className="font-bold text-sm">Step 3</p>
-                    <p>Payment</p>
+
+                  {/* Step */}
+                  <div
+                    className={`rounded-3xl border-2 p-5 transition-all ${
+                      finalAmount
+                        ? 'border-teal-600 bg-teal-50'
+                        : 'border-gray-200 bg-white'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div
+                        className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold ${
+                          finalAmount
+                            ? 'bg-teal-600 text-white'
+                            : 'bg-gray-100 text-gray-500'
+                        }`}
+                      >
+                        3
+                      </div>
+
+                      <div>
+                        <p className="font-bold text-gray-950">
+                          Secure Payment
+                        </p>
+
+                        <p className="text-sm text-gray-500">
+                          Complete donation
+                        </p>
+                      </div>
+                    </div>
                   </div>
+                </div>
+
+                {/* Trust */}
+                <div className="mt-10 rounded-3xl bg-teal-600 p-6 text-white shadow-xl">
+                  <CheckCircle2 size={30} />
+
+                  <h4 className="mt-4 text-xl font-bold">
+                    100% Transparency
+                  </h4>
+
+                  <p className="mt-3 leading-relaxed text-white/80">
+                    Your donation directly supports verified NGO
+                    initiatives and community programs.
+                  </p>
                 </div>
               </div>
             </div>
 
-            {/* Content */}
-            <div className="md:col-span-2">
+            {/* CONTENT */}
+            <div>
               {step === 1 ? (
-                // Campaign Selection
                 <div>
-                  <h2 className="text-3xl font-bold mb-8">Select a Campaign</h2>
-                  <div className="space-y-4">
+                  <h2 className="text-5xl font-black text-gray-950">
+                    Choose a campaign
+                  </h2>
+
+                  <p className="mt-4 text-lg text-gray-600">
+                    Select a cause you want to support today.
+                  </p>
+
+                  <div className="mt-14 grid gap-8">
                     {campaigns.map((campaign) => (
                       <div
                         key={campaign.id}
-                        onClick={() => handleCampaignSelect(campaign.id)}
-                        className="bg-white rounded-lg shadow-lg overflow-hidden border-2 border-border hover:border-primary cursor-pointer transition-all hover:shadow-xl"
+                        onClick={() =>
+                          handleCampaignSelect(campaign.id)
+                        }
+                        className="group cursor-pointer overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                       >
-                        <div className="md:flex">
-                          <div className="h-32 md:w-32 bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center flex-shrink-0">
-                            <span className="text-4xl">
-                              {campaign.category === 'Education' ? '📚' : campaign.category === 'Healthcare' ? '⚕️' : '🍲'}
-                            </span>
+                        <div className="grid lg:grid-cols-[320px_1fr]">
+                          
+                          {/* IMAGE */}
+                          <div className="relative h-[260px] overflow-hidden">
+                            <Image
+                              src={
+                                campaign.category === 'Education'
+                                  ? 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop'
+                                  : campaign.category === 'Healthcare'
+                                  ? 'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop'
+                                  : 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop'
+                              }
+                              alt={campaign.title}
+                              fill
+                              className="object-cover transition-transform duration-700 group-hover:scale-110"
+                            />
+
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+
+                            <div className="absolute bottom-6 left-6 rounded-full bg-white/20 px-5 py-2 text-sm font-semibold text-white shadow-xl backdrop-blur-md">
+                              {campaign.category}
+                            </div>
                           </div>
-                          <div className="p-6 flex-1">
-                            <h3 className="text-xl font-bold mb-2">{campaign.title}</h3>
-                            <p className="text-muted-foreground text-sm mb-3">{campaign.description}</p>
-                            <div className="flex justify-between items-center">
-                              <span className="text-sm font-semibold text-primary">
-                                {Math.round((campaign.current / campaign.target) * 100)}% funded
-                              </span>
-                              <span className="text-xs text-muted-foreground">
-                                {campaign.donors.toLocaleString()} donors
-                              </span>
+
+                          {/* CONTENT */}
+                          <div className="flex flex-col justify-between p-8">
+                            <div>
+                              <h3 className="text-3xl font-bold text-gray-950">
+                                {campaign.title}
+                              </h3>
+
+                              <p className="mt-5 text-lg leading-relaxed text-gray-600">
+                                {campaign.description}
+                              </p>
+                            </div>
+
+                            {/* Progress */}
+                            <div className="mt-8">
+                              <div className="mb-3 flex items-center justify-between">
+                                <span className="font-semibold text-teal-700">
+                                  ₹{campaign.current.toLocaleString('en-IN')} raised
+                                </span>
+
+                                <span className="text-sm text-gray-500">
+                                  {campaign.donors.toLocaleString()} donors
+                                </span>
+                              </div>
+
+                              <div className="h-3 overflow-hidden rounded-full bg-gray-100">
+                                <div
+                                  className="h-full rounded-full bg-gradient-to-r from-teal-500 to-cyan-500"
+                                  style={{
+                                    width: `${
+                                      (campaign.current /
+                                        campaign.target) *
+                                      100
+                                    }%`,
+                                  }}
+                                ></div>
+                              </div>
+
+                              <div className="mt-3 flex items-center justify-between">
+                                <span className="text-sm text-gray-500">
+                                  Goal: ₹{campaign.target.toLocaleString('en-IN')}
+                                </span>
+
+                                <span className="font-bold text-teal-700">
+                                  {Math.round(
+                                    (campaign.current /
+                                      campaign.target) *
+                                      100
+                                  )}
+                                  %
+                                </span>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -114,108 +376,213 @@ export default function Donate() {
                     ))}
                   </div>
                 </div>
-              ) : step === 2 ? (
-                // Amount Selection
+              ) : (
                 <div>
-                  <div className="flex items-center gap-3 mb-8">
-                    <button onClick={() => setStep(1)} className="text-primary hover:text-primary/80">
-                      <ArrowLeft size={24} />
-                    </button>
-                    <h2 className="text-3xl font-bold">Choose Donation Amount</h2>
-                  </div>
+                  {/* Amount Section */}
+                  <button
+                    onClick={() => setStep(1)}
+                    className="mb-8 inline-flex items-center gap-2 font-semibold text-teal-700"
+                  >
+                    <ArrowLeft size={20} />
+                    Back to campaigns
+                  </button>
 
-                  {selectedCampaign && (
-                    <div className="bg-secondary rounded-lg p-6 mb-8">
-                      <h3 className="font-bold text-lg mb-2">{selectedCampaign.title}</h3>
-                      <p className="text-muted-foreground">{selectedCampaign.description}</p>
-                    </div>
-                  )}
+                  <div className="overflow-hidden rounded-[2.5rem] border border-white/30 bg-white shadow-2xl">
+                    
+                    {/* Selected Campaign */}
+                    {selectedCampaign && (
+                      <div className="relative h-[320px] overflow-hidden">
+                        <Image
+                          src={
+                            selectedCampaign.category === 'Education'
+                              ? 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop'
+                              : selectedCampaign.category === 'Healthcare'
+                              ? 'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop'
+                              : 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop'
+                          }
+                          alt={selectedCampaign.title}
+                          fill
+                          className="object-cover"
+                        />
 
-                  <div className="space-y-6">
-                    <div>
-                      <p className="font-semibold mb-4">Quick Amount Selection</p>
-                      <div className="grid grid-cols-3 gap-3">
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+
+                        <div className="absolute bottom-8 left-8">
+                          <h2 className="text-4xl font-black text-white">
+                            {selectedCampaign.title}
+                          </h2>
+
+                          <p className="mt-3 max-w-2xl text-lg text-white/80">
+                            {selectedCampaign.description}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Donation Form */}
+                    <div className="p-8 md:p-12">
+                      <h3 className="text-4xl font-bold text-gray-950">
+                        Select donation amount
+                      </h3>
+
+                      <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">
                         {predefinedAmounts.map((amount) => (
                           <button
                             key={amount}
-                            onClick={() => handleAmountSelect(amount)}
-                            className={`p-4 rounded-lg font-semibold transition-all ${
+                            onClick={() =>
+                              handleAmountSelect(amount)
+                            }
+                            className={`rounded-3xl border-2 p-6 text-xl font-bold transition-all duration-300 ${
                               selectedAmount === amount
-                                ? 'bg-primary text-primary-foreground border-2 border-primary'
-                                : 'bg-white border-2 border-border hover:border-primary'
+                                ? 'border-teal-600 bg-teal-600 text-white shadow-xl'
+                                : 'border-gray-200 bg-white hover:border-teal-500'
                             }`}
                           >
                             ₹{amount.toLocaleString('en-IN')}
                           </button>
                         ))}
                       </div>
-                    </div>
 
-                    <div>
-                      <p className="font-semibold mb-4">Or enter a custom amount</p>
-                      <div className="flex gap-2">
-                        <div className="flex-1 flex items-center border-2 border-border rounded-lg overflow-hidden">
-                          <span className="px-4 py-3 font-semibold text-primary">₹</span>
+                      {/* Custom Amount */}
+                      <div className="mt-10">
+                        <p className="mb-4 font-semibold text-gray-700">
+                          Custom Amount
+                        </p>
+
+                        <div className="flex items-center overflow-hidden rounded-3xl border-2 border-gray-200 bg-white shadow-sm">
+                          <span className="px-6 text-3xl font-bold text-teal-700">
+                            ₹
+                          </span>
+
                           <input
                             type="number"
                             value={customAmount}
-                            onChange={(e) => handleCustomAmountChange(e.target.value)}
-                            placeholder="Enter amount"
-                            className="flex-1 px-4 py-3 border-0 focus:outline-none"
+                            onChange={(e) =>
+                              handleCustomAmountChange(
+                                e.target.value
+                              )
+                            }
+                            placeholder="Enter donation amount"
+                            className="w-full px-4 py-6 text-2xl font-semibold outline-none"
                           />
                         </div>
                       </div>
-                    </div>
 
-                    <div className="bg-white rounded-lg p-6 border border-border">
-                      <p className="text-muted-foreground mb-3">Your Donation</p>
-                      <p className="text-4xl font-bold text-primary mb-6">
-                        ₹{finalAmount ? finalAmount.toLocaleString('en-IN') : '0'}
-                      </p>
-                      <button
-                        onClick={handleProceedToPayment}
-                        disabled={!finalAmount}
-                        className="w-full bg-primary text-primary-foreground py-3 rounded-lg font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        Proceed to Payment
-                      </button>
+                      {/* Summary */}
+                      <div className="mt-12 rounded-[2rem] bg-gradient-to-r from-teal-600 to-cyan-600 p-8 text-white shadow-2xl">
+                        
+                        <p className="text-lg text-white/80">
+                          Your Donation
+                        </p>
+
+                        <h2 className="mt-3 text-6xl font-black">
+                          ₹
+                          {finalAmount
+                            ? finalAmount.toLocaleString('en-IN')
+                            : '0'}
+                        </h2>
+
+                        <p className="mt-5 max-w-xl text-white/80">
+                          Every contribution helps us provide food,
+                          healthcare, education, and support to
+                          underserved communities.
+                        </p>
+
+                        <button
+                          onClick={handleProceedToPayment}
+                          disabled={!finalAmount}
+                          className="mt-8 rounded-2xl bg-white px-8 py-4 text-lg font-bold text-teal-700 shadow-xl transition-all duration-300 hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-50"
+                        >
+                          Proceed to Payment
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              ) : step === 3 ? (
-                // This will be handled by checkout page
-                <div>Payment section</div>
-              ) : null}
+              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Impact Section */}
-      <section className="py-20 px-4 bg-secondary">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold mb-12 text-center">Your Impact</h2>
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="bg-white rounded-lg p-6 text-center border border-border">
-              <p className="text-4xl font-bold text-primary mb-2">₹100</p>
-              <p className="text-muted-foreground">Feeds 1 child for a month</p>
+      {/* IMPACT */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-white px-4 py-28">
+        
+        <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-teal-100 blur-3xl"></div>
+
+        <div className="relative mx-auto max-w-7xl">
+          
+          <div className="text-center">
+            <div className="inline-flex rounded-full bg-teal-50 px-5 py-2">
+              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-700">
+                Your Impact
+              </span>
             </div>
-            <div className="bg-white rounded-lg p-6 text-center border border-border">
-              <p className="text-4xl font-bold text-primary mb-2">₹500</p>
-              <p className="text-muted-foreground">School supplies for 5 children</p>
-            </div>
-            <div className="bg-white rounded-lg p-6 text-center border border-border">
-              <p className="text-4xl font-bold text-primary mb-2">₹1000</p>
-              <p className="text-muted-foreground">Medical checkup for 10 people</p>
-            </div>
-            <div className="bg-white rounded-lg p-6 text-center border border-border">
-              <p className="text-4xl font-bold text-primary mb-2">₹5000</p>
-              <p className="text-muted-foreground">Scholarship for 1 student</p>
-            </div>
+
+            <h2 className="mt-6 text-5xl font-black text-gray-950">
+              Small donations, big transformation
+            </h2>
+          </div>
+
+          <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+            
+            {[
+              {
+                amount: '₹100',
+                text: 'Feeds one child for a month',
+                image:
+                  'https://images.unsplash.com/photo-1516627145497-ae6968895b74?q=80&w=1200&auto=format&fit=crop',
+              },
+              {
+                amount: '₹500',
+                text: 'School supplies for children',
+                image:
+                  'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop',
+              },
+              {
+                amount: '₹1000',
+                text: 'Medical support for families',
+                image:
+                  'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop',
+              },
+              {
+                amount: '₹5000',
+                text: 'Scholarship for one student',
+                image:
+                  'https://images.unsplash.com/photo-1529390079861-591de354faf5?q=80&w=1200&auto=format&fit=crop',
+              },
+            ].map((item) => (
+              <div
+                key={item.amount}
+                className="group overflow-hidden rounded-[2rem] bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+              >
+                <div className="relative h-64 overflow-hidden">
+                  <Image
+                    src={item.image}
+                    alt={item.text}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+
+                  <div className="absolute bottom-6 left-6">
+                    <h3 className="text-4xl font-black text-white">
+                      {item.amount}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="p-8">
+                  <p className="text-lg leading-relaxed text-gray-600">
+                    {item.text}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
-
     </main>
   )
 }

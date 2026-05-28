@@ -58,6 +58,7 @@ const config = {
       fontFamily: {
         sans: 'var(--font-sans)',
         mono: 'var(--font-mono)',
+        poppins: ['var(--font-poppins)'],
       },
     },
   },

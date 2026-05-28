@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import { Geist } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
+import { Poppins } from 'next/font/google';
+const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
 
-const geist = Geist({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: 'Hope Foundation - Transforming Lives, Building Communities',
@@ -37,7 +37,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body className={`${geist.className} font-sans antialiased`}>
+      <body className={`${poppins.className} font-sans antialiased`}>
         <main>
           <Navbar />
           {children}

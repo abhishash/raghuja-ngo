@@ -12,9 +12,9 @@ export function Navbar() {
     { href: '/', label: 'Home' },
     { href: '/about', label: 'About Us' },
     { href: '/team', label: 'Team Page' },
-    { href: '/services', label: 'Services / Activities' },
+    { href: '/services', label: 'Services & Activities' },
     { href: '/events', label: 'Vlogs & Events' },
-    { href: '/donate', label: 'Donation System' },
+    { href: '/donate', label: 'Donation' },
     { href: '/contact', label: 'Contact Us' },
     { href: '/careers', label: 'Careers' },
   ]
@@ -105,7 +105,7 @@ export function Navbar() {
                   className="flex items-center gap-2 text-white hover:bg-teal-700 px-4 py-2 rounded font-medium text-sm"
                 >
                   <Users size={18} />
-                  Member registration form
+                  Member Registration
                 </Link>
                 <Link
                   href="/donate"
