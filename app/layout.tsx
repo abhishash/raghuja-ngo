@@ -8,8 +8,8 @@ const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600
 
 
 export const metadata: Metadata = {
-  title: 'Hope Foundation - Transforming Lives, Building Communities',
-  description: 'Join Hope Foundation in our mission to empower underprivileged communities through education, healthcare, and food security programs.',
+  title: 'Raghuja SocialWelfare Foundation - Transforming Lives, Building Communities',
+  description: 'Join Raghuja SocialWelfare Foundation in our mission to empower underprivileged communities through education, healthcare, and food security programs.',
   generator: 'v0.app',
   icons: {
     icon: [
