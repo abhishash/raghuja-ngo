@@ -3,39 +3,25 @@
 import Link from 'next/link'
 import { ngoInfo } from '@/lib/mockData'
 import { Mail, Phone, MapPin, Heart } from 'lucide-react'
+import { useGetCMSQuery } from '@/lib/services/master-api'
+import CmsPlaceholder from './layout/placeholder/CmsPlaceholder'
 
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
-  const footerSections = [
-    {
-      title: 'Quick Links',
-      links: [
-        { label: 'Home', href: '/' },
-        { label: 'About Us', href: '/about' },
-        { label: 'Prosthetic Limbs', href: '/services' },
-        { label: 'Donate', href: '/donate' },
-        { label: 'Contact Us', href: '/contact' },
-      ]
-    },
-    {
-      title: 'Our Programs',
-      links: [
-        { label: 'Prosthetic Limbs', href: '/services' },
-        { label: 'Rehabilitation', href: '/services' },
-        { label: 'Training & Support', href: '/services' },
-      ]
-    },
-    {
-      title: 'Community',
-      links: [
-        { label: 'Events', href: '/events' },
-        { label: 'Team', href: '/team' },
-        { label: 'Member registration form', href: '/membership' },
-        { label: 'Careers', href: '/careers' },
-      ]
-    }
-  ]
+  const { data, isLoading } = useGetCMSQuery();
+
+  const footerSections = Object.entries(
+    data ?? {}
+  ).map(([key, value]) => ({
+    title:
+      key.charAt(0).toUpperCase() + key.slice(1),
+
+    links: value.map((item) => ({
+      label: item.name,
+      href: item.url,
+    })),
+  }));
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -64,20 +50,24 @@ export function Footer() {
           </div>
 
           {/* Footer Sections */}
-          {footerSections.map((section) => (
-            <div key={section.title}>
-              <h3 className="font-bold mb-4 text-white">{section.title}</h3>
-              <ul className="space-y-2">
-                {section.links.map((link) => (
-                  <li key={link.href}>
-                    <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {
+            isLoading ? <CmsPlaceholder /> :
+              footerSections.map((section) => (
+                <div key={section.title}>
+                  <h3 className="font-bold mb-4 text-white">{section.title}</h3>
+                  <ul className="space-y-2">
+                    {section.links.map((link) => (
+                      <li key={link.href}>
+                        <Link href={link.href} className="text-sm text-gray-400 hover:text-white transition-colors">
+                          {link.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+          }
+
         </div>
 
         {/* Divider */}

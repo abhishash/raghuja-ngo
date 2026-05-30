@@ -4,6 +4,7 @@ import './globals.css'
 import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 import { Poppins } from 'next/font/google';
+import ReduxProvider from '@/components/providers/redux-provider'
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
 
 
@@ -38,12 +39,14 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background">
       <body className={`${poppins.className} font-sans antialiased`}>
-        <main>
-          <Navbar />
-          {children}
-          {process.env.NODE_ENV === 'production' && <Analytics />}
-          <Footer />
-        </main>
+        <ReduxProvider>
+          <main>
+            <Navbar />
+            {children}
+            {process.env.NODE_ENV === 'production' && <Analytics />}
+            <Footer />
+          </main>
+        </ReduxProvider>
       </body>
     </html>
   )
