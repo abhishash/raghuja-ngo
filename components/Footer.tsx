@@ -52,8 +52,8 @@ export function Footer() {
           {/* Footer Sections */}
           {
             isLoading ? <CmsPlaceholder /> :
-              footerSections.map((section) => (
-                <div key={section.title}>
+              footerSections.map((section, index) => (
+                <div key={index}>
                   <h3 className="font-bold mb-4 text-white">{section.title}</h3>
                   <ul className="space-y-2">
                     {section.links.map((link) => (

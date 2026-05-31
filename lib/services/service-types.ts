@@ -27,3 +27,20 @@ export type GalleryResponse = {
     status: string;
     data: GalleryItem[];
 };
+
+export type Campaign = {
+  id: number;
+  name: string;
+  short_description: string;
+  target_amount: string;
+  raised_amount: string;
+  image: string;
+  description: string;
+  progress_percentage: number;
+};
+
+export type CampaignResponse = {
+  status: boolean;
+  message: string;
+  data: Campaign[];
+};

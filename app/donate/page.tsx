@@ -12,15 +12,19 @@ import {
   Sparkles,
   CheckCircle2,
 } from 'lucide-react'
+import { useGetCampaignsQuery } from '@/lib/services/campaign-api'
+import { imageBaseUrl } from '@/lib/constants'
 
 export default function Donate() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
-  const selectedCampaignId = searchParams.get('campaign')
+  const selectedCampaignId = searchParams.get('campaign');
+
+  const { data: campaigns, isLoading } = useGetCampaignsQuery();
 
   const selectedCampaign = selectedCampaignId
-    ? campaigns.find((c) => c.id === parseInt(selectedCampaignId))
+    ? campaigns?.find((c) => c.id === parseInt(selectedCampaignId))
     : null
 
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
@@ -60,13 +64,13 @@ export default function Donate() {
     <main className="overflow-hidden bg-white">
       {/* HERO */}
       <section className="relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-cyan-50 px-4 py-28">
-        
+
         {/* Background Blur */}
         <div className="absolute -left-20 top-0 h-80 w-80 rounded-full bg-teal-300/20 blur-3xl"></div>
         <div className="absolute bottom-0 right-0 h-[30rem] w-[30rem] rounded-full bg-cyan-300/20 blur-3xl"></div>
 
         <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
-          
+
           {/* LEFT */}
           <div>
             <div className="inline-flex items-center rounded-full border border-teal-200 bg-white/70 px-5 py-2 shadow-sm backdrop-blur-md">
@@ -88,7 +92,7 @@ export default function Donate() {
 
             {/* Features */}
             <div className="mt-10 grid gap-4 sm:grid-cols-3">
-              
+
               <div className="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
                 <ShieldCheck className="text-teal-700" size={28} />
 
@@ -151,33 +155,31 @@ export default function Donate() {
       <section className="bg-white px-4 py-24">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
-            
+
             {/* SIDEBAR */}
             <div>
               <div className="sticky top-24 overflow-hidden rounded-[2rem] border border-white/40 bg-gradient-to-br from-slate-50 to-white p-8 shadow-xl">
-                
+
                 <h3 className="text-2xl font-bold text-gray-950">
                   Donation Steps
                 </h3>
 
                 <div className="mt-10 space-y-5">
-                  
+
                   {/* Step */}
                   <div
                     onClick={() => setStep(1)}
-                    className={`group cursor-pointer rounded-3xl border-2 p-5 transition-all ${
-                      step >= 1
-                        ? 'border-teal-600 bg-teal-50'
-                        : 'border-gray-200 bg-white'
-                    }`}
+                    className={`group cursor-pointer rounded-3xl border-2 p-5 transition-all ${step >= 1
+                      ? 'border-teal-600 bg-teal-50'
+                      : 'border-gray-200 bg-white'
+                      }`}
                   >
                     <div className="flex items-center gap-4">
                       <div
-                        className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold ${
-                          step >= 1
-                            ? 'bg-teal-600 text-white'
-                            : 'bg-gray-100 text-gray-500'
-                        }`}
+                        className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold ${step >= 1
+                          ? 'bg-teal-600 text-white'
+                          : 'bg-gray-100 text-gray-500'
+                          }`}
                       >
                         1
                       </div>
@@ -196,19 +198,17 @@ export default function Donate() {
 
                   {/* Step */}
                   <div
-                    className={`rounded-3xl border-2 p-5 transition-all ${
-                      step >= 2
-                        ? 'border-teal-600 bg-teal-50'
-                        : 'border-gray-200 bg-white'
-                    }`}
+                    className={`rounded-3xl border-2 p-5 transition-all ${step >= 2
+                      ? 'border-teal-600 bg-teal-50'
+                      : 'border-gray-200 bg-white'
+                      }`}
                   >
                     <div className="flex items-center gap-4">
                       <div
-                        className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold ${
-                          step >= 2
-                            ? 'bg-teal-600 text-white'
-                            : 'bg-gray-100 text-gray-500'
-                        }`}
+                        className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold ${step >= 2
+                          ? 'bg-teal-600 text-white'
+                          : 'bg-gray-100 text-gray-500'
+                          }`}
                       >
                         2
                       </div>
@@ -227,19 +227,17 @@ export default function Donate() {
 
                   {/* Step */}
                   <div
-                    className={`rounded-3xl border-2 p-5 transition-all ${
-                      finalAmount
-                        ? 'border-teal-600 bg-teal-50'
-                        : 'border-gray-200 bg-white'
-                    }`}
+                    className={`rounded-3xl border-2 p-5 transition-all ${finalAmount
+                      ? 'border-teal-600 bg-teal-50'
+                      : 'border-gray-200 bg-white'
+                      }`}
                   >
                     <div className="flex items-center gap-4">
                       <div
-                        className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold ${
-                          finalAmount
-                            ? 'bg-teal-600 text-white'
-                            : 'bg-gray-100 text-gray-500'
-                        }`}
+                        className={`flex h-12 w-12 items-center justify-center rounded-2xl font-bold ${finalAmount
+                          ? 'bg-teal-600 text-white'
+                          : 'bg-gray-100 text-gray-500'
+                          }`}
                       >
                         3
                       </div>
@@ -286,94 +284,133 @@ export default function Donate() {
                   </p>
 
                   <div className="mt-14 grid gap-8">
-                    {campaigns.map((campaign) => (
-                      <div
-                        key={campaign.id}
-                        onClick={() =>
-                          handleCampaignSelect(campaign.id)
-                        }
-                        className="group cursor-pointer overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                      >
-                        <div className="grid lg:grid-cols-[320px_1fr]">
-                          
-                          {/* IMAGE */}
-                          <div className="relative h-[260px] overflow-hidden">
-                            <Image
-                              src={
-                                campaign.category === 'Education'
-                                  ? 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop'
-                                  : campaign.category === 'Healthcare'
-                                  ? 'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop'
-                                  : 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop'
-                              }
-                              alt={campaign.title}
-                              fill
-                              className="object-cover transition-transform duration-700 group-hover:scale-110"
-                            />
+                    {isLoading ? (
+                      <div className="space-y-8">
+                        {[...Array(3)].map((_, index) => (
+                          <div
+                            key={index}
+                            className="overflow-hidden rounded-[2rem] border border-gray-200 bg-white shadow-xl animate-pulse"
+                          >
+                            <div className="grid lg:grid-cols-[320px_1fr]">
 
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent"></div>
+                              {/* IMAGE SKELETON */}
+                              <div className="h-[260px] bg-gray-200" />
 
-                            <div className="absolute bottom-6 left-6 rounded-full bg-white/20 px-5 py-2 text-sm font-semibold text-white shadow-xl backdrop-blur-md">
-                              {campaign.category}
+                              {/* CONTENT SKELETON */}
+                              <div className="flex flex-col justify-between px-8 py-6">
+                                <div>
+                                  {/* Title */}
+                                  <div className="h-8 w-2/3 rounded-full bg-gray-200" />
+
+                                  {/* Description */}
+                                  <div className="mt-4 space-y-3">
+                                    <div className="h-4 w-full rounded-full bg-gray-200" />
+                                    <div className="h-4 w-11/12 rounded-full bg-gray-200" />
+                                    <div className="h-4 w-8/12 rounded-full bg-gray-200" />
+                                  </div>
+                                </div>
+
+                                {/* Progress Section */}
+                                <div className="mt-8">
+                                  <div className="mb-3 flex items-center justify-between">
+                                    <div className="h-5 w-32 rounded-full bg-gray-200" />
+                                    <div className="h-4 w-20 rounded-full bg-gray-200" />
+                                  </div>
+
+                                  {/* Progress Bar */}
+                                  <div className="h-3 w-full rounded-full bg-gray-200" />
+
+                                  <div className="mt-4 flex items-center justify-between">
+                                    <div className="h-4 w-28 rounded-full bg-gray-200" />
+                                    <div className="h-5 w-12 rounded-full bg-gray-200" />
+                                  </div>
+                                </div>
+                              </div>
                             </div>
                           </div>
+                        ))}
+                      </div>
+                    ) : (
+                      campaigns?.map((campaign) => (
+                        <div
+                          key={campaign.id}
+                          onClick={() => handleCampaignSelect(campaign.id)}
+                          className="group cursor-pointer overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                        >
+                          <div className="grid lg:grid-cols-[320px_1fr]">
 
-                          {/* CONTENT */}
-                          <div className="flex flex-col justify-between p-8">
-                            <div>
-                              <h3 className="text-3xl font-bold text-gray-950">
-                                {campaign.title}
-                              </h3>
+                            {/* IMAGE */}
+                            <div className="relative h-[260px] overflow-hidden bg-gray-100">
+                              <Image
+                                src={
+                                  campaign.image
+                                    ? `${imageBaseUrl}${campaign.image}`
+                                    : "/placeholder-campaign.jpg"
+                                }
+                                alt={campaign.name}
+                                fill
+                                className="object-cover transition-transform duration-700 group-hover:scale-110"
+                              />
 
-                              <p className="mt-5 text-lg leading-relaxed text-gray-600">
-                                {campaign.description}
-                              </p>
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                             </div>
 
-                            {/* Progress */}
-                            <div className="mt-8">
-                              <div className="mb-3 flex items-center justify-between">
-                                <span className="font-semibold text-teal-700">
-                                  ₹{campaign.current.toLocaleString('en-IN')} raised
-                                </span>
+                            {/* CONTENT */}
+                            <div className="flex flex-col justify-between px-8 py-4">
+                              <div>
+                                <h3 className="text-2xl font-bold text-gray-950">
+                                  {campaign.name}
+                                </h3>
 
-                                <span className="text-sm text-gray-500">
-                                  {campaign.donors.toLocaleString()} donors
-                                </span>
+                                <p className="mt-3 text-lg leading-relaxed text-gray-600">
+                                  {campaign.description}
+                                </p>
                               </div>
 
-                              <div className="h-3 overflow-hidden rounded-full bg-gray-100">
-                                <div
-                                  className="h-full rounded-full bg-gradient-to-r from-teal-500 to-cyan-500"
-                                  style={{
-                                    width: `${
-                                      (campaign.current /
-                                        campaign.target) *
-                                      100
-                                    }%`,
-                                  }}
-                                ></div>
-                              </div>
+                              {/* Progress */}
+                              <div className="mt-4">
+                                <div className="mb-2 flex items-center justify-between">
+                                  <span className="font-semibold text-teal-700">
+                                    ₹{campaign.raised_amount} raised
+                                  </span>
 
-                              <div className="mt-3 flex items-center justify-between">
-                                <span className="text-sm text-gray-500">
-                                  Goal: ₹{campaign.target.toLocaleString('en-IN')}
-                                </span>
+                                  <span className="text-sm text-gray-500">
+                                    0 donors
+                                  </span>
+                                </div>
 
-                                <span className="font-bold text-teal-700">
-                                  {Math.round(
-                                    (campaign.current /
-                                      campaign.target) *
+                                <div className="h-3 overflow-hidden rounded-full bg-gray-100">
+                                  <div
+                                    className="h-full rounded-full bg-gradient-to-r from-teal-500 to-cyan-500"
+                                    style={{
+                                      width: `${(parseFloat(campaign.raised_amount) /
+                                          parseFloat(campaign.target_amount)) *
+                                        100
+                                        }%`,
+                                    }}
+                                  />
+                                </div>
+
+                                <div className="mt-3 flex items-center justify-between">
+                                  <span className="text-sm text-gray-500">
+                                    Goal: ₹{campaign.target_amount}
+                                  </span>
+
+                                  <span className="font-bold text-teal-700">
+                                    {Math.round(
+                                      (parseFloat(campaign.raised_amount) /
+                                        parseFloat(campaign.target_amount)) *
                                       100
-                                  )}
-                                  %
-                                </span>
+                                    )}
+                                    %
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
+                      ))
+                    )}
                   </div>
                 </div>
               ) : (
@@ -388,19 +425,20 @@ export default function Donate() {
                   </button>
 
                   <div className="overflow-hidden rounded-[2.5rem] border border-white/30 bg-white shadow-2xl">
-                    
+
                     {/* Selected Campaign */}
                     {selectedCampaign && (
                       <div className="relative h-[320px] overflow-hidden">
                         <Image
-                          src={
-                            selectedCampaign.category === 'Education'
-                              ? 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop'
-                              : selectedCampaign.category === 'Healthcare'
-                              ? 'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop'
-                              : 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop'
-                          }
-                          alt={selectedCampaign.title}
+                          // src={
+                          //   selectedCampaign.category === 'Education'
+                          //     ? 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop'
+                          //     : selectedCampaign.category === 'Healthcare'
+                          //     ? 'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop'
+                          //     : 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop'
+                          // }
+                          src={`${imageBaseUrl}${selectedCampaign.image}`}
+                          alt={selectedCampaign.name}
                           fill
                           className="object-cover"
                         />
@@ -409,7 +447,7 @@ export default function Donate() {
 
                         <div className="absolute bottom-8 left-8">
                           <h2 className="text-4xl font-black text-white">
-                            {selectedCampaign.title}
+                            {selectedCampaign.name}
                           </h2>
 
                           <p className="mt-3 max-w-2xl text-lg text-white/80">
@@ -432,11 +470,10 @@ export default function Donate() {
                             onClick={() =>
                               handleAmountSelect(amount)
                             }
-                            className={`rounded-3xl border-2 p-6 text-xl font-bold transition-all duration-300 ${
-                              selectedAmount === amount
-                                ? 'border-teal-600 bg-teal-600 text-white shadow-xl'
-                                : 'border-gray-200 bg-white hover:border-teal-500'
-                            }`}
+                            className={`rounded-3xl border-2 p-6 text-xl font-bold transition-all duration-300 ${selectedAmount === amount
+                              ? 'border-teal-600 bg-teal-600 text-white shadow-xl'
+                              : 'border-gray-200 bg-white hover:border-teal-500'
+                              }`}
                           >
                             ₹{amount.toLocaleString('en-IN')}
                           </button>
@@ -470,7 +507,7 @@ export default function Donate() {
 
                       {/* Summary */}
                       <div className="mt-12 rounded-[2rem] bg-gradient-to-r from-teal-600 to-cyan-600 p-8 text-white shadow-2xl">
-                        
+
                         <p className="text-lg text-white/80">
                           Your Donation
                         </p>
@@ -507,11 +544,11 @@ export default function Donate() {
 
       {/* IMPACT */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-white px-4 py-28">
-        
+
         <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-teal-100 blur-3xl"></div>
 
         <div className="relative mx-auto max-w-7xl">
-          
+
           <div className="text-center">
             <div className="inline-flex rounded-full bg-teal-50 px-5 py-2">
               <span className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-700">
@@ -525,7 +562,7 @@ export default function Donate() {
           </div>
 
           <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
-            
+
             {[
               {
                 amount: '₹100',
