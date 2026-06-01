@@ -21,7 +21,6 @@ type Props = {
 
 export default async function EventDetails({ params }: Props) {
     const { id } = await params
-    console.log(id)
     const event = events.find(
         (e) => e.id === parseInt(id)
     )

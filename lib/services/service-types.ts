@@ -43,4 +43,18 @@ export type CampaignResponse = {
   status: boolean;
   message: string;
   data: Campaign[];
+}
+
+export type CampaignDetailsResponse = {
+  status: boolean;
+  message: string;
+  data: Campaign;
 };
+
+export type CreateOrderPayload = {
+    campaign_id : number;
+    name: string;
+    email: string;
+    phone: string;
+    amount: string;
+}

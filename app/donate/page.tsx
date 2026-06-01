@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { campaigns } from '@/lib/mockData'
+import Link from 'next/link';
 import {
   ArrowLeft,
   Heart,
@@ -14,6 +15,7 @@ import {
 } from 'lucide-react'
 import { useGetCampaignsQuery } from '@/lib/services/campaign-api'
 import { imageBaseUrl } from '@/lib/constants'
+import { isArray } from '@/lib/type-guards'
 
 export default function Donate() {
   const searchParams = useSearchParams()
@@ -331,10 +333,10 @@ export default function Donate() {
                         ))}
                       </div>
                     ) : (
-                      campaigns?.map((campaign) => (
-                        <div
+                      isArray(campaigns) ? campaigns?.map((campaign) => (
+                        <Link
                           key={campaign.id}
-                          onClick={() => handleCampaignSelect(campaign.id)}
+                          href={`/donate/${campaign.id}`}
                           className="group cursor-pointer overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                         >
                           <div className="grid lg:grid-cols-[320px_1fr]">
@@ -384,7 +386,7 @@ export default function Donate() {
                                     className="h-full rounded-full bg-gradient-to-r from-teal-500 to-cyan-500"
                                     style={{
                                       width: `${(parseFloat(campaign.raised_amount) /
-                                          parseFloat(campaign.target_amount)) *
+                                        parseFloat(campaign.target_amount)) *
                                         100
                                         }%`,
                                     }}
@@ -408,8 +410,33 @@ export default function Donate() {
                               </div>
                             </div>
                           </div>
+                        </Link>
+                      )) : <div className="flex min-h-[450px] py-8 flex-col items-center justify-center rounded-[2rem] border border-dashed border-teal-200 bg-gradient-to-br from-teal-50 to-cyan-50 px-6 text-center shadow-lg">
+
+                        {/* ICON */}
+                        <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-md">
+                          <span className="text-5xl">📢</span>
                         </div>
-                      ))
+
+                        {/* TITLE */}
+                        <h2 className="mt-6 text-3xl font-bold text-gray-900">
+                          No Campaigns Found
+                        </h2>
+
+                        {/* DESCRIPTION */}
+                        <p className="mt-3 max-w-xl text-lg leading-relaxed text-gray-600">
+                          We couldn&apos;t find any active campaigns right now.
+                          Please check back later or explore other initiatives.
+                        </p>
+
+                        {/* BUTTON */}
+                        <button
+                          onClick={() => window.location.reload()}
+                          className="mt-8 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-8 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                        >
+                          Refresh Page
+                        </button>
+                      </div>
                     )}
                   </div>
                 </div>
