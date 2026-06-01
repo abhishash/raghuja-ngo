@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { campaigns } from '@/lib/mockData'
+import { useCreateOrderMutation } from "@/lib/services/order-api"
 import {
     ArrowLeft,
     Heart,
@@ -49,6 +50,7 @@ export default function CampaignDetails({ id }: Props) {
 
     const handleProceedToPayment = () => {
         if (!campaign || !finalAmount) return
+        console.log();
 
         router.push(
             `/donate/checkout?campaign=${campaign.id}&amount=${finalAmount}`
