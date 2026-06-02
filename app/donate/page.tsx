@@ -1,18 +1,10 @@
 'use client'
 
 import Image from 'next/image'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { useState } from 'react'
-import { campaigns } from '@/lib/mockData'
 import Link from 'next/link';
-import {
-  ArrowLeft,
-  Heart,
-  Users,
-  ShieldCheck,
-  Sparkles,
-  CheckCircle2,
-} from 'lucide-react'
+import { CheckCircle2 } from 'lucide-react'
 import { useGetCampaignsQuery } from '@/lib/services/campaign-api'
 import { imageBaseUrl } from '@/lib/constants'
 import { isArray } from '@/lib/type-guards'
@@ -20,7 +12,6 @@ import DonateHeroSection from '@/components/campaign/donate'
 
 export default function Donate() {
   const searchParams = useSearchParams()
-  const router = useRouter()
 
   const selectedCampaignId = searchParams.get('campaign');
 
@@ -34,18 +25,6 @@ export default function Donate() {
   const [customAmount, setCustomAmount] = useState('')
   const [step, setStep] = useState(selectedCampaign ? 2 : 1)
 
-  const predefinedAmounts = [100, 500, 1000, 2500, 5000, 10000]
-
-  const handleCampaignSelect = (campaignId: number) => {
-    router.push(`/donate?campaign=${campaignId}`)
-    setStep(2)
-  }
-
-  const handleAmountSelect = (amount: number) => {
-    setSelectedAmount(amount)
-    setCustomAmount('')
-  }
-
   const handleCustomAmountChange = (value: string) => {
     setCustomAmount(value)
     setSelectedAmount(null)
@@ -55,13 +34,7 @@ export default function Donate() {
     ? parseInt(customAmount)
     : selectedAmount
 
-  const handleProceedToPayment = () => {
-    if (!selectedCampaign || !finalAmount) return
 
-    router.push(
-      `/donate/checkout?campaign=${selectedCampaign.id}&amount=${finalAmount}`
-    )
-  }
 
   return (
     <main className="overflow-hidden bg-white">
