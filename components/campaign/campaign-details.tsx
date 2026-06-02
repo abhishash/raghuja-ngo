@@ -5,7 +5,6 @@ import Image from 'next/image'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { campaigns } from '@/lib/mockData'
-import { useCreateOrderMutation } from "@/lib/services/order-api"
 import {
     ArrowLeft,
     Heart,
@@ -17,6 +16,7 @@ import {
 import { useGetCampaignByidQuery, useGetCampaignsQuery } from '@/lib/services/campaign-api'
 import { imageBaseUrl } from '@/lib/constants'
 import { isArray } from '@/lib/type-guards'
+import { useCreateOrderMutation } from '@/lib/services/payment-api'
 
 
 type Props = {
@@ -28,19 +28,18 @@ export default function CampaignDetails({ id }: Props) {
     const router = useRouter()
 
     const campaignId = Number(id)
-
     const [selectedAmount, setSelectedAmount] = useState<number | null>(null)
     const [customAmount, setCustomAmount] = useState('');
     const [step, setStep] = useState(2);
     const { data: campaign, isLoading } = useGetCampaignByidQuery(campaignId);
-    const [ createOrder, { isLoading: isSaving } ] = useCreateOrderMutation();
+
 
     const predefinedAmounts = [100, 500, 1000, 2500, 5000, 10000]
 
     const handleAmountSelect = (amount: number) => {
-        
-        setSelectedAmount(amount)
-        setCustomAmount('')
+
+        setSelectedAmount(amount);
+        setCustomAmount(amount.toString());
     }
 
     const handleCustomAmountChange = (value: string) => {
@@ -91,15 +90,22 @@ export default function CampaignDetails({ id }: Props) {
         )
     }
 
-    
+
 
     return (
         <main className="overflow-hidden bg-white">
 
-
             {/* MAIN CONTENT */}
-            <section className="bg-white px-4 py-24">
+            <section className="bg-white px-4 py-12">
                 <div className="mx-auto max-w-7xl">
+                    {/* Amount Section */}
+                    <button
+                        onClick={() => router.push('/donate')}
+                        className="mb-4 px-7 text-xl cursor-pointer inline-flex items-center gap-2 font-semibold text-teal-700"
+                    >
+                        <ArrowLeft size={20} />
+                        Back to campaigns
+                    </button>
                     <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
 
                         {/* SIDEBAR */}
@@ -114,7 +120,6 @@ export default function CampaignDetails({ id }: Props) {
 
                                     {/* Step */}
                                     <div
-                                        onClick={() => setStep(1)}
                                         className={`group cursor-pointer rounded-3xl border-2 p-5 transition-all ${step >= 1
                                             ? 'border-teal-600 bg-teal-50'
                                             : 'border-gray-200 bg-white'
@@ -220,14 +225,7 @@ export default function CampaignDetails({ id }: Props) {
                         {/* CONTENT */}
                         <div>
                             <div>
-                                {/* Amount Section */}
-                                <button
-                                    onClick={() => setStep(1)}
-                                    className="mb-8 inline-flex items-center gap-2 font-semibold text-teal-700"
-                                >
-                                    <ArrowLeft size={20} />
-                                    Back to campaigns
-                                </button>
+
 
                                 <div className="overflow-hidden rounded-[2.5rem] border border-white/30 bg-white shadow-2xl">
 
@@ -256,19 +254,19 @@ export default function CampaignDetails({ id }: Props) {
                                     )}
 
                                     {/* Donation Form */}
-                                    <div className="p-8 md:p-12">
-                                        <h3 className="text-4xl font-bold text-gray-950">
+                                    <div className="p-4 md:p-8">
+                                        <h3 className="text-2xl font-bold text-gray-950">
                                             Select donation amount
                                         </h3>
 
-                                        <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">
+                                        <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3">
                                             {predefinedAmounts.map((amount) => (
                                                 <button
                                                     key={amount}
                                                     onClick={() =>
                                                         handleAmountSelect(amount)
                                                     }
-                                                    className={`rounded-3xl border-2 p-6 text-xl font-bold transition-all duration-300 ${selectedAmount === amount
+                                                    className={`rounded-3xl border-2 p-5 cursor-pointer text-xl font-bold transition-all duration-300 ${selectedAmount === amount
                                                         ? 'border-teal-600 bg-teal-600 text-white shadow-xl'
                                                         : 'border-gray-200 bg-white hover:border-teal-500'
                                                         }`}
@@ -279,7 +277,7 @@ export default function CampaignDetails({ id }: Props) {
                                         </div>
 
                                         {/* Custom Amount */}
-                                        <div className="mt-10">
+                                        <div className="mt-6">
                                             <p className="mb-4 font-semibold text-gray-700">
                                                 Custom Amount
                                             </p>
@@ -298,26 +296,26 @@ export default function CampaignDetails({ id }: Props) {
                                                         )
                                                     }
                                                     placeholder="Enter donation amount"
-                                                    className="w-full px-4 py-6 text-2xl font-semibold outline-none"
+                                                    className="w-full px-4 py-4 text-2xl font-semibold outline-none"
                                                 />
                                             </div>
                                         </div>
 
                                         {/* Summary */}
-                                        <div className="mt-12 rounded-[2rem] bg-gradient-to-r from-teal-600 to-cyan-600 p-8 text-white shadow-2xl">
+                                        <div className="mt-6 rounded-[2rem] bg-gradient-to-r from-teal-600 to-cyan-600 p-6 text-white shadow-2xl">
 
                                             <p className="text-lg text-white/80">
                                                 Your Donation
                                             </p>
 
-                                            <h2 className="mt-3 text-6xl font-black">
+                                            <h2 className="mt-2 text-5xl font-black">
                                                 ₹
                                                 {finalAmount
                                                     ? finalAmount.toLocaleString('en-IN')
                                                     : '0'}
                                             </h2>
 
-                                            <p className="mt-5 max-w-xl text-white/80">
+                                            <p className="mt-3 max-w-xl text-white/80">
                                                 Every contribution helps us provide food,
                                                 healthcare, education, and support to
                                                 underserved communities.
@@ -326,7 +324,7 @@ export default function CampaignDetails({ id }: Props) {
                                             <button
                                                 onClick={handleProceedToPayment}
                                                 disabled={!finalAmount}
-                                                className="mt-8 rounded-2xl bg-white px-8 py-4 text-lg font-bold text-teal-700 shadow-xl transition-all duration-300 hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-50"
+                                                className="mt-5 rounded-2xl cursor-pointer bg-white px-8 py-4 text-lg font-bold text-teal-700 shadow-xl transition-all duration-300 hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-50"
                                             >
                                                 Proceed to Payment
                                             </button>

@@ -16,6 +16,7 @@ import {
 import { useGetCampaignsQuery } from '@/lib/services/campaign-api'
 import { imageBaseUrl } from '@/lib/constants'
 import { isArray } from '@/lib/type-guards'
+import DonateHeroSection from '@/components/campaign/donate'
 
 export default function Donate() {
   const searchParams = useSearchParams()
@@ -65,96 +66,10 @@ export default function Donate() {
   return (
     <main className="overflow-hidden bg-white">
       {/* HERO */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-teal-50 via-white to-cyan-50 px-4 py-28">
-
-        {/* Background Blur */}
-        <div className="absolute -left-20 top-0 h-80 w-80 rounded-full bg-teal-300/20 blur-3xl"></div>
-        <div className="absolute bottom-0 right-0 h-[30rem] w-[30rem] rounded-full bg-cyan-300/20 blur-3xl"></div>
-
-        <div className="relative mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
-
-          {/* LEFT */}
-          <div>
-            <div className="inline-flex items-center rounded-full border border-teal-200 bg-white/70 px-5 py-2 shadow-sm backdrop-blur-md">
-              <Heart className="mr-2 text-teal-700" size={16} />
-
-              <span className="text-sm font-semibold uppercase tracking-[0.2em] text-teal-700">
-                Donate & Support
-              </span>
-            </div>
-
-            <h1 className="mt-8 text-5xl font-black leading-tight text-gray-950 md:text-7xl">
-              Every donation creates real change
-            </h1>
-
-            <p className="mt-8 max-w-2xl text-xl leading-relaxed text-gray-600">
-              Help us provide education, healthcare, food support,
-              and rehabilitation services to underserved communities.
-            </p>
-
-            {/* Features */}
-            <div className="mt-10 grid gap-4 sm:grid-cols-3">
-
-              <div className="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
-                <ShieldCheck className="text-teal-700" size={28} />
-
-                <p className="mt-4 font-bold text-gray-950">
-                  Secure Payments
-                </p>
-              </div>
-
-              <div className="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
-                <Users className="text-teal-700" size={28} />
-
-                <p className="mt-4 font-bold text-gray-950">
-                  Trusted NGO
-                </p>
-              </div>
-
-              <div className="rounded-3xl border border-white/40 bg-white/70 p-5 shadow-lg backdrop-blur-xl">
-                <Sparkles className="text-teal-700" size={28} />
-
-                <p className="mt-4 font-bold text-gray-950">
-                  Real Impact
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {/* RIGHT IMAGE */}
-          <div className="relative">
-            <div className="relative overflow-hidden rounded-[2.5rem] shadow-2xl">
-              <Image
-                src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1400&auto=format&fit=crop"
-                alt="Donation Impact"
-                width={900}
-                height={700}
-                className="h-[550px] w-full object-cover"
-              />
-
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
-
-              {/* Floating Card */}
-              <div className="absolute bottom-8 left-8 rounded-3xl bg-white/20 p-6 shadow-2xl backdrop-blur-xl">
-                <p className="text-sm font-semibold uppercase tracking-wide text-teal-100">
-                  Lives Impacted
-                </p>
-
-                <h3 className="mt-2 text-5xl font-black text-white">
-                  25K+
-                </h3>
-
-                <p className="mt-2 text-white/80">
-                  Children & families supported
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <DonateHeroSection />
 
       {/* MAIN CONTENT */}
-      <section className="bg-white px-4 py-24">
+      <section className="bg-white px-4 py-12">
         <div className="mx-auto max-w-7xl">
           <div className="grid gap-10 lg:grid-cols-[320px_1fr]">
 
@@ -166,7 +81,7 @@ export default function Donate() {
                   Donation Steps
                 </h3>
 
-                <div className="mt-10 space-y-5">
+                <div className="mt-8 space-y-4">
 
                   {/* Step */}
                   <div
@@ -258,7 +173,7 @@ export default function Donate() {
                 </div>
 
                 {/* Trust */}
-                <div className="mt-10 rounded-3xl bg-teal-600 p-6 text-white shadow-xl">
+                <div className="mt-8 rounded-3xl bg-teal-600 p-6 text-white shadow-xl">
                   <CheckCircle2 size={30} />
 
                   <h4 className="mt-4 text-xl font-bold">
@@ -275,305 +190,178 @@ export default function Donate() {
 
             {/* CONTENT */}
             <div>
-              {step === 1 ? (
-                <div>
-                  <h2 className="text-5xl font-black text-gray-950">
-                    Choose a campaign
-                  </h2>
+              <h2 className="text-4xl font-black text-gray-950">
+                Choose a campaign
+              </h2>
 
-                  <p className="mt-4 text-lg text-gray-600">
-                    Select a cause you want to support today.
-                  </p>
+              <p className="mt-4 text-lg text-gray-600">
+                Select a cause you want to support today.
+              </p>
 
-                  <div className="mt-14 grid gap-8">
-                    {isLoading ? (
-                      <div className="space-y-8">
-                        {[...Array(3)].map((_, index) => (
-                          <div
-                            key={index}
-                            className="overflow-hidden rounded-[2rem] border border-gray-200 bg-white shadow-xl animate-pulse"
-                          >
-                            <div className="grid lg:grid-cols-[320px_1fr]">
+              <div className="mt-10 grid gap-8">
+                {isLoading ? (
+                  <div className="space-y-8">
+                    {[...Array(3)].map((_, index) => (
+                      <div
+                        key={index}
+                        className="overflow-hidden rounded-[2rem] border border-gray-200 bg-white shadow-xl animate-pulse"
+                      >
+                        <div className="grid lg:grid-cols-[320px_1fr]">
 
-                              {/* IMAGE SKELETON */}
-                              <div className="h-[260px] bg-gray-200" />
+                          {/* IMAGE SKELETON */}
+                          <div className="h-[260px] bg-gray-200" />
 
-                              {/* CONTENT SKELETON */}
-                              <div className="flex flex-col justify-between px-8 py-6">
-                                <div>
-                                  {/* Title */}
-                                  <div className="h-8 w-2/3 rounded-full bg-gray-200" />
+                          {/* CONTENT SKELETON */}
+                          <div className="flex flex-col justify-between px-8 py-6">
+                            <div>
+                              {/* Title */}
+                              <div className="h-8 w-2/3 rounded-full bg-gray-200" />
 
-                                  {/* Description */}
-                                  <div className="mt-4 space-y-3">
-                                    <div className="h-4 w-full rounded-full bg-gray-200" />
-                                    <div className="h-4 w-11/12 rounded-full bg-gray-200" />
-                                    <div className="h-4 w-8/12 rounded-full bg-gray-200" />
-                                  </div>
-                                </div>
+                              {/* Description */}
+                              <div className="mt-4 space-y-3">
+                                <div className="h-4 w-full rounded-full bg-gray-200" />
+                                <div className="h-4 w-11/12 rounded-full bg-gray-200" />
+                                <div className="h-4 w-8/12 rounded-full bg-gray-200" />
+                              </div>
+                            </div>
 
-                                {/* Progress Section */}
-                                <div className="mt-8">
-                                  <div className="mb-3 flex items-center justify-between">
-                                    <div className="h-5 w-32 rounded-full bg-gray-200" />
-                                    <div className="h-4 w-20 rounded-full bg-gray-200" />
-                                  </div>
+                            {/* Progress Section */}
+                            <div className="mt-8">
+                              <div className="mb-3 flex items-center justify-between">
+                                <div className="h-5 w-32 rounded-full bg-gray-200" />
+                                <div className="h-4 w-20 rounded-full bg-gray-200" />
+                              </div>
 
-                                  {/* Progress Bar */}
-                                  <div className="h-3 w-full rounded-full bg-gray-200" />
+                              {/* Progress Bar */}
+                              <div className="h-3 w-full rounded-full bg-gray-200" />
 
-                                  <div className="mt-4 flex items-center justify-between">
-                                    <div className="h-4 w-28 rounded-full bg-gray-200" />
-                                    <div className="h-5 w-12 rounded-full bg-gray-200" />
-                                  </div>
-                                </div>
+                              <div className="mt-4 flex items-center justify-between">
+                                <div className="h-4 w-28 rounded-full bg-gray-200" />
+                                <div className="h-5 w-12 rounded-full bg-gray-200" />
                               </div>
                             </div>
                           </div>
-                        ))}
-                      </div>
-                    ) : (
-                      isArray(campaigns) ? campaigns?.map((campaign) => (
-                        <Link
-                          key={campaign.id}
-                          href={`/donate/${campaign.id}`}
-                          className="group cursor-pointer overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                        >
-                          <div className="grid lg:grid-cols-[320px_1fr]">
-
-                            {/* IMAGE */}
-                            <div className="relative h-[260px] overflow-hidden bg-gray-100">
-                              <Image
-                                src={
-                                  campaign.image
-                                    ? `${imageBaseUrl}${campaign.image}`
-                                    : "/placeholder-campaign.jpg"
-                                }
-                                alt={campaign.name}
-                                fill
-                                className="object-cover transition-transform duration-700 group-hover:scale-110"
-                              />
-
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-                            </div>
-
-                            {/* CONTENT */}
-                            <div className="flex flex-col justify-between px-8 py-4">
-                              <div>
-                                <h3 className="text-2xl font-bold text-gray-950">
-                                  {campaign.name}
-                                </h3>
-
-                                <p className="mt-3 text-lg leading-relaxed text-gray-600">
-                                  {campaign.description}
-                                </p>
-                              </div>
-
-                              {/* Progress */}
-                              <div className="mt-4">
-                                <div className="mb-2 flex items-center justify-between">
-                                  <span className="font-semibold text-teal-700">
-                                    ₹{campaign.raised_amount} raised
-                                  </span>
-
-                                  <span className="text-sm text-gray-500">
-                                    0 donors
-                                  </span>
-                                </div>
-
-                                <div className="h-3 overflow-hidden rounded-full bg-gray-100">
-                                  <div
-                                    className="h-full rounded-full bg-gradient-to-r from-teal-500 to-cyan-500"
-                                    style={{
-                                      width: `${(parseFloat(campaign.raised_amount) /
-                                        parseFloat(campaign.target_amount)) *
-                                        100
-                                        }%`,
-                                    }}
-                                  />
-                                </div>
-
-                                <div className="mt-3 flex items-center justify-between">
-                                  <span className="text-sm text-gray-500">
-                                    Goal: ₹{campaign.target_amount}
-                                  </span>
-
-                                  <span className="font-bold text-teal-700">
-                                    {Math.round(
-                                      (parseFloat(campaign.raised_amount) /
-                                        parseFloat(campaign.target_amount)) *
-                                      100
-                                    )}
-                                    %
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </Link>
-                      )) : <div className="flex min-h-[450px] py-8 flex-col items-center justify-center rounded-[2rem] border border-dashed border-teal-200 bg-gradient-to-br from-teal-50 to-cyan-50 px-6 text-center shadow-lg">
-
-                        {/* ICON */}
-                        <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-md">
-                          <span className="text-5xl">📢</span>
                         </div>
-
-                        {/* TITLE */}
-                        <h2 className="mt-6 text-3xl font-bold text-gray-900">
-                          No Campaigns Found
-                        </h2>
-
-                        {/* DESCRIPTION */}
-                        <p className="mt-3 max-w-xl text-lg leading-relaxed text-gray-600">
-                          We couldn&apos;t find any active campaigns right now.
-                          Please check back later or explore other initiatives.
-                        </p>
-
-                        {/* BUTTON */}
-                        <button
-                          onClick={() => window.location.reload()}
-                          className="mt-8 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-8 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
-                        >
-                          Refresh Page
-                        </button>
                       </div>
-                    )}
+                    ))}
                   </div>
-                </div>
-              ) : (
-                <div>
-                  {/* Amount Section */}
-                  <button
-                    onClick={() => setStep(1)}
-                    className="mb-8 inline-flex items-center gap-2 font-semibold text-teal-700"
-                  >
-                    <ArrowLeft size={20} />
-                    Back to campaigns
-                  </button>
+                ) : (
+                  isArray(campaigns) ? campaigns?.map((campaign) => (
+                    <Link
+                      key={campaign.id}
+                      href={`/donate/${campaign.id}`}
+                      className="group cursor-pointer overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
+                    >
+                      <div className="grid lg:grid-cols-[320px_1fr]">
 
-                  <div className="overflow-hidden rounded-[2.5rem] border border-white/30 bg-white shadow-2xl">
-
-                    {/* Selected Campaign */}
-                    {selectedCampaign && (
-                      <div className="relative h-[320px] overflow-hidden">
-                        <Image
-                          // src={
-                          //   selectedCampaign.category === 'Education'
-                          //     ? 'https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1200&auto=format&fit=crop'
-                          //     : selectedCampaign.category === 'Healthcare'
-                          //     ? 'https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop'
-                          //     : 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?q=80&w=1200&auto=format&fit=crop'
-                          // }
-                          src={`${imageBaseUrl}${selectedCampaign.image}`}
-                          alt={selectedCampaign.name}
-                          fill
-                          className="object-cover"
-                        />
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-
-                        <div className="absolute bottom-8 left-8">
-                          <h2 className="text-4xl font-black text-white">
-                            {selectedCampaign.name}
-                          </h2>
-
-                          <p className="mt-3 max-w-2xl text-lg text-white/80">
-                            {selectedCampaign.description}
-                          </p>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Donation Form */}
-                    <div className="p-8 md:p-12">
-                      <h3 className="text-4xl font-bold text-gray-950">
-                        Select donation amount
-                      </h3>
-
-                      <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-3">
-                        {predefinedAmounts.map((amount) => (
-                          <button
-                            key={amount}
-                            onClick={() =>
-                              handleAmountSelect(amount)
+                        {/* IMAGE */}
+                        <div className="relative h-[260px] overflow-hidden bg-gray-100">
+                          <Image
+                            src={
+                              campaign.image
+                                ? `${imageBaseUrl}${campaign.image}`
+                                : "/placeholder-campaign.jpg"
                             }
-                            className={`rounded-3xl border-2 p-6 text-xl font-bold transition-all duration-300 ${selectedAmount === amount
-                              ? 'border-teal-600 bg-teal-600 text-white shadow-xl'
-                              : 'border-gray-200 bg-white hover:border-teal-500'
-                              }`}
-                          >
-                            ₹{amount.toLocaleString('en-IN')}
-                          </button>
-                        ))}
-                      </div>
-
-                      {/* Custom Amount */}
-                      <div className="mt-10">
-                        <p className="mb-4 font-semibold text-gray-700">
-                          Custom Amount
-                        </p>
-
-                        <div className="flex items-center overflow-hidden rounded-3xl border-2 border-gray-200 bg-white shadow-sm">
-                          <span className="px-6 text-3xl font-bold text-teal-700">
-                            ₹
-                          </span>
-
-                          <input
-                            type="number"
-                            value={customAmount}
-                            onChange={(e) =>
-                              handleCustomAmountChange(
-                                e.target.value
-                              )
-                            }
-                            placeholder="Enter donation amount"
-                            className="w-full px-4 py-6 text-2xl font-semibold outline-none"
+                            alt={campaign.name}
+                            fill
+                            className="object-cover transition-transform duration-700 group-hover:scale-110"
                           />
+
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                        </div>
+
+                        {/* CONTENT */}
+                        <div className="flex flex-col justify-between px-8 py-4">
+                          <div>
+                            <h3 className="text-2xl font-bold text-gray-950">
+                              {campaign.name}
+                            </h3>
+
+                            <p className="mt-3 text-lg leading-relaxed text-gray-600">
+                              {campaign.description}
+                            </p>
+                          </div>
+
+                          {/* Progress */}
+                          <div className="mt-4">
+                            <div className="mb-2 flex items-center justify-between">
+                              <span className="font-semibold text-teal-700">
+                                ₹{campaign.raised_amount} raised
+                              </span>
+
+                              <span className="text-sm text-gray-500">
+                                {campaign.donors} donors
+                              </span>
+                            </div>
+
+                            <div className="h-3 overflow-hidden rounded-full bg-gray-100">
+                              <div
+                                className="h-full rounded-full bg-gradient-to-r from-teal-500 to-cyan-500"
+                                style={{
+                                  width: `${(parseFloat(campaign.raised_amount) /
+                                    parseFloat(campaign.target_amount)) *
+                                    100
+                                    }%`,
+                                }}
+                              />
+                            </div>
+
+                            <div className="mt-3 flex items-center justify-between">
+                              <span className="text-sm text-gray-500">
+                                Goal: ₹{campaign.target_amount}
+                              </span>
+
+                              <span className="font-bold text-teal-700">
+                                {Math.round(
+                                  (parseFloat(campaign.raised_amount) /
+                                    parseFloat(campaign.target_amount)) *
+                                  100
+                                )}
+                                %
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
+                    </Link>
+                  )) : <div className="flex min-h-[450px] py-8 flex-col items-center justify-center rounded-[2rem] border border-dashed border-teal-200 bg-gradient-to-br from-teal-50 to-cyan-50 px-6 text-center shadow-lg">
 
-                      {/* Summary */}
-                      <div className="mt-12 rounded-[2rem] bg-gradient-to-r from-teal-600 to-cyan-600 p-8 text-white shadow-2xl">
-
-                        <p className="text-lg text-white/80">
-                          Your Donation
-                        </p>
-
-                        <h2 className="mt-3 text-6xl font-black">
-                          ₹
-                          {finalAmount
-                            ? finalAmount.toLocaleString('en-IN')
-                            : '0'}
-                        </h2>
-
-                        <p className="mt-5 max-w-xl text-white/80">
-                          Every contribution helps us provide food,
-                          healthcare, education, and support to
-                          underserved communities.
-                        </p>
-
-                        <button
-                          onClick={handleProceedToPayment}
-                          disabled={!finalAmount}
-                          className="mt-8 rounded-2xl bg-white px-8 py-4 text-lg font-bold text-teal-700 shadow-xl transition-all duration-300 hover:-translate-y-1 disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                          Proceed to Payment
-                        </button>
-                      </div>
+                    {/* ICON */}
+                    <div className="flex h-24 w-24 items-center justify-center rounded-full bg-white shadow-md">
+                      <span className="text-5xl">📢</span>
                     </div>
+
+                    {/* TITLE */}
+                    <h2 className="mt-6 text-3xl font-bold text-gray-900">
+                      No Campaigns Found
+                    </h2>
+
+                    {/* DESCRIPTION */}
+                    <p className="mt-3 max-w-xl text-lg leading-relaxed text-gray-600">
+                      We couldn&apos;t find any active campaigns right now.
+                      Please check back later or explore other initiatives.
+                    </p>
+
+                    {/* BUTTON */}
+                    <button
+                      onClick={() => window.location.reload()}
+                      className="mt-8 rounded-full bg-gradient-to-r from-teal-500 to-cyan-500 px-8 py-3 text-lg font-semibold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
+                    >
+                      Refresh Page
+                    </button>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
+            </div>
+            <div>
             </div>
           </div>
         </div>
       </section>
 
       {/* IMPACT */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-white px-4 py-28">
-
+      <section className="relative overflow-hidden bg-gradient-to-br from-slate-50 to-white px-4 py-12">
         <div className="absolute right-0 top-0 h-80 w-80 rounded-full bg-teal-100 blur-3xl"></div>
-
         <div className="relative mx-auto max-w-7xl">
 
           <div className="text-center">
@@ -583,12 +371,12 @@ export default function Donate() {
               </span>
             </div>
 
-            <h2 className="mt-6 text-5xl font-black text-gray-950">
+            <h2 className="mt-3 text-4xl font-black text-gray-950">
               Small donations, big transformation
             </h2>
           </div>
 
-          <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-12 grid gap-8 md:grid-cols-2 xl:grid-cols-4">
 
             {[
               {
@@ -647,6 +435,6 @@ export default function Donate() {
           </div>
         </div>
       </section>
-    </main>
+    </main >
   )
 }

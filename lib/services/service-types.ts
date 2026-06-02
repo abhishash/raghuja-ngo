@@ -37,6 +37,7 @@ export type Campaign = {
   image: string;
   description: string;
   progress_percentage: number;
+  donors: number;
 };
 
 export type CampaignResponse = {
@@ -52,9 +53,45 @@ export type CampaignDetailsResponse = {
 };
 
 export type CreateOrderPayload = {
-    campaign_id : number;
+    campaign_id?: string;
     name: string;
     email: string;
     phone: string;
-    amount: string;
+    amount: number;
 }
+
+export type verifyPaymentPayload = {
+  campaign_id: string;
+  donation_id: number;
+  razorpay_order_id: string;
+  razorpay_payment_id: string;
+  razorpay_signature: string;
+}
+
+export type Prefill = {
+  name: string;
+  email: string;
+  contact: string;
+};
+
+export type DonationOrderData = {
+  donation_id: number;
+  campaign_id: number;
+  user_id: number;
+  name: string;
+  email: string;
+  phone: string;
+  amount: string;
+  amount_in_paise: number;
+  currency: string;
+  receipt: string;
+  razorpay_key: string;
+  razorpay_order_id: string;
+  prefill: Prefill;
+};
+
+export type DonationOrderResponse = {
+  status: boolean;
+  message: string;
+  data: DonationOrderData;
+};

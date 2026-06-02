@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Campaign, CampaignDetailsResponse, CampaignResponse, CMSData, CMSResponse, GalleryItem, GalleryResponse } from "./service-types";
+import { Campaign, CampaignDetailsResponse, CampaignResponse, CMSData, CMSResponse, CreateOrderPayload, DonationOrderData, DonationOrderResponse, GalleryItem, GalleryResponse, verifyPaymentPayload } from "./service-types";
 const APIENDPOINT = process.env.API_ENDPOINT;
 
 export const paymentApi = createApi({
@@ -12,15 +12,37 @@ export const paymentApi = createApi({
     }),
     tagTypes: ["orders"],
     endpoints: (builder) => ({
-        createOrder: builder.mutation<Campaign, CreateOrderPayload>({
+        createOrder: builder.mutation<DonationOrderData, CreateOrderPayload>({
             query: (body) => ({
                 url: `/donations/create-order`,
                 method: "POST",
                 body
             }),
-            transformResponse: (response: CampaignResponse) => response?.data,
+            transformResponse: (response: DonationOrderResponse) => response?.data,
+        }),
+
+        verifyPayment: builder.mutation<DonationOrderData, verifyPaymentPayload>({
+            query: (body) => ({
+                url: `/donations/verify-payment`,
+                method: "POST",
+                body
+            }),
+            transformResponse: (response: DonationOrderResponse) => response?.data,
+        }),
+
+        paymentFailed: builder.mutation<DonationOrderData, {
+            donation_id: number,
+            campaign_id: string,
+            reason: string
+        }>({
+            query: (body) => ({
+                url: `/donations/payment-failed`,
+                method: "POST",
+                body
+            }),
+            transformResponse: (response: DonationOrderResponse) => response?.data,
         }),
     })
 })
 
-export const { useCreateOrderMutation } = paymentApi;
+export const { useCreateOrderMutation, useVerifyPaymentMutation, usePaymentFailedMutation } = paymentApi;
