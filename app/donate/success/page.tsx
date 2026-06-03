@@ -84,12 +84,12 @@ export default function DonationSuccess() {
     const text = `I just donated ₹${donationAmount.toLocaleString(
       'en-IN'
     )} to ${campaign?.name
-      } through Hope Foundation. Join me in making a difference 🙏`
+      } through Raghuja SocialWelfare Foundation. Join me in making a difference 🙏`
 
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'I Donated to Hope Foundation',
+          title: 'I Donated to Raghuja SocialWelfare Foundation',
           text,
           url: window.location.href,
         })

@@ -8,9 +8,9 @@ export const ngoInfo = {
   founded: 2015,
   description: 'Raghuja SocialWelfare Foundationis a non-profit organization dedicated to providing advanced prosthetic limbs and rehabilitation services to individuals with disabilities.',
   contact: {
-    email: 'info@raghujafoundation.org',
-    phone: '+91 7906948573',
-    address: 'Rama Healthcare Lane, Agra, India'
+    email: 'ngo@raghujasocialwelfarefoundation.com',
+    phone: '+91 9548335369',
+    address: 'Village Gadhi Dharajeet Chitaura, Shamshabad Agra, Shamshabad, AGRA, Uttar Pradesh, INDIA - 283125'
   }
 }
 

@@ -4,9 +4,9 @@ import { ArrowRight, HeartHandshake, Users2 } from "lucide-react";
 import { teamMembers } from "@/lib/mockData";
 
 export const metadata = {
-  title: "Our Team - Hope Foundation",
+  title: "Our Team - Raghuja SocialWelfare Foundation",
   description:
-    "Meet the dedicated team members driving Hope Foundation's mission forward",
+    "Meet the dedicated team members driving Raghuja SocialWelfare Foundation's mission forward",
 };
 
 export default function Team() {

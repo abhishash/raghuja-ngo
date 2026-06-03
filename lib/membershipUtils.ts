@@ -48,7 +48,7 @@ export async function generateIdCardPDF(member: Member): Promise<Blob> {
   doc.setTextColor(255, 255, 255)
   doc.setFont('helvetica', 'bold')
   doc.setFontSize(10)
-  doc.text('HOPE FOUNDATION', 5, 8)
+  doc.text('RAGHUJA FOUNDATION', 5, 8)
   doc.text('Member ID Card', 5, 14)
 
   // Member details
