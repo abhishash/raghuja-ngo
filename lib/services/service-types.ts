@@ -95,3 +95,53 @@ export type DonationOrderResponse = {
   message: string;
   data: DonationOrderData;
 };
+
+export interface EventItem {
+  id: number;
+  title: string;
+  description: string;
+  location: string;
+  event_date: string;
+  month: string;
+  day: string;
+  attendees: string;
+  link: string | null;
+  image: string;
+}
+
+export interface EventsResponse {
+  status: boolean;
+  data: EventItem[];
+}
+
+export interface EventDetailsData {
+  id: number;
+  title: string;
+  description: string;
+  location: string;
+  event_date: string;
+  month: string;
+  day: string;
+  attendees: string;
+  link: string | null;
+  image: string;
+}
+
+export interface EventDetailsResponse {
+  status: boolean;
+  data: EventDetailsData;
+}
+
+export interface VideoItem {
+  id: number;
+  title: string;
+  video_type: string;
+  thumbnail: string;
+  video_url: string;
+  video_file: string | null;
+}
+
+export interface VideosResponse {
+  status: boolean;
+  data: VideoItem[];
+}

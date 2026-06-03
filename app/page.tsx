@@ -19,6 +19,8 @@ import { HOMEPAGE_SLIDERS } from '@/lib/constants'
 import { isArray } from '@/lib/type-guards'
 import Image from 'next/image'
 import Campaigns from '@/components/campaign/campaigns'
+import EventsSection from '@/components/events/events-section'
+import Vlogs from '@/components/events/vlogs'
 
 export default async function Home() {
 
@@ -37,7 +39,7 @@ export default async function Home() {
     data: BannerDataTypes[];
   } = homePageBanners;
 
- 
+
   const eventImages = [
     {
       src: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=80',
@@ -48,23 +50,7 @@ export default async function Home() {
       alt: 'People attending a social impact conference',
     },
   ]
-  const vlogImages = [
-    {
-      src: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80',
-      alt: 'Students and volunteers sharing a community story',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1576765607924-6f3d9f62fdaf?auto=format&fit=crop&w=900&q=80',
-      alt: 'Healthcare support team documenting field work',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1559027615-cd4628902d4a?auto=format&fit=crop&w=900&q=80',
-      alt: 'Volunteers working together during an outreach program',
-    },
-  ]
-  const featuredCampaigns = campaigns.slice(0, 3)
-  const latestEvents = events.slice(0, 2)
-  const latestVlogs = vlogs.slice(0, 3)
+  
 
   return (
     <>
@@ -363,132 +349,7 @@ export default async function Home() {
       {/* =========================
    EVENTS SECTION
 ========================= */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50 px-4 py-24">
-
-        <div className="absolute left-0 top-0 h-[28rem] w-[28rem] rounded-full bg-teal-100/60 blur-3xl"></div>
-
-        <div className="relative mx-auto max-w-7xl">
-
-          {/* Header */}
-          <div className="mb-16 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-            <div className="max-w-3xl">
-              <div className="inline-flex rounded-full border border-teal-200 bg-white/70 px-5 py-2 shadow-sm backdrop-blur-md">
-                <span className="text-sm font-semibold uppercase tracking-[0.25em] text-teal-700">
-                  Upcoming Events
-                </span>
-              </div>
-
-              <h2 className="mt-6 text-4xl font-black text-gray-950 md:text-6xl">
-                Meet us at our next programs
-              </h2>
-
-              <p className="mt-6 text-lg leading-relaxed text-gray-600">
-                Join camps, awareness drives, outreach initiatives,
-                and community gatherings where support transforms into action.
-              </p>
-            </div>
-
-            <Link
-              href="/events"
-              className="group inline-flex items-center gap-3 rounded-2xl border border-teal-200 bg-white px-7 py-4 font-semibold text-teal-700 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:bg-teal-600 hover:text-white"
-            >
-              View Events
-
-              <ArrowRight
-                size={20}
-                className="transition-transform duration-300 group-hover:translate-x-1"
-              />
-            </Link>
-          </div>
-
-          {/* Event Cards */}
-          <div className="grid gap-8 lg:grid-cols-2">
-            {latestEvents.map((event, index) => {
-              const eventImage = eventImages[index]
-
-              return (
-                <Link
-                  key={event.id}
-                  href={`/events?id=${event.id}`}
-                  className="group overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
-                >
-                  <div className="grid sm:grid-cols-[0.9fr_1.1fr]">
-
-                    {/* Image */}
-                    <div className="relative min-h-[320px] overflow-hidden">
-                      <Image
-                        src={eventImage.src}
-                        alt={eventImage.alt}
-                        fill
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent"></div>
-
-                      {/* Date */}
-                      <div className="absolute left-5 top-5 rounded-2xl bg-white/90 px-5 py-4 shadow-xl backdrop-blur-md">
-                        <p className="text-4xl font-black text-teal-700">
-                          {new Date(event.date).toLocaleDateString('en-IN', {
-                            day: 'numeric',
-                          })}
-                        </p>
-
-                        <p className="mt-1 text-xs font-bold uppercase tracking-[0.2em] text-gray-600">
-                          {new Date(event.date).toLocaleDateString('en-IN', {
-                            month: 'short',
-                          })}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex flex-col p-8">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-teal-50 text-teal-700 transition-all duration-300 group-hover:bg-teal-600 group-hover:text-white">
-                        <CalendarDays size={28} />
-                      </div>
-
-                      <h3 className="mt-6 text-3xl font-bold leading-tight text-gray-950 transition-colors group-hover:text-teal-700">
-                        {event.title}
-                      </h3>
-
-                      <p className="mt-4 leading-relaxed text-gray-600">
-                        {event.description}
-                      </p>
-
-                      {/* Info */}
-                      <div className="mt-8 space-y-4 text-sm">
-
-                        <div className="flex items-center gap-3 text-gray-600">
-                          <Clock size={18} className="text-teal-700" />
-                          {event.time}
-                        </div>
-
-                        <div className="flex items-center gap-3 text-gray-600">
-                          <MapPin size={18} className="text-teal-700" />
-                          {event.location}
-                        </div>
-
-                        <div className="flex items-center gap-3 text-gray-600">
-                          <Users size={18} className="text-teal-700" />
-                          {event.attendees.toLocaleString('en-IN')} attendees
-                        </div>
-                      </div>
-
-                      <div className="mt-auto pt-8">
-                        <span className="inline-flex items-center gap-2 font-semibold text-teal-700 transition-transform duration-300 group-hover:translate-x-1">
-                          Event Details
-
-                          <ArrowRight size={18} />
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
-        </div>
-      </section>
+      <EventsSection />
 
       {/* =========================
    VLOGS SECTION
@@ -528,68 +389,7 @@ export default async function Home() {
           </div>
 
           {/* Vlog Cards */}
-          <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-            {latestVlogs.map((vlog, index) => {
-              const vlogImage = vlogImages[index]
-
-              return (
-                <Link
-                  key={vlog.id}
-                  href="/events"
-                  className="group overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
-                >
-                  {/* Thumbnail */}
-                  <div className="relative aspect-video overflow-hidden">
-                    <img
-                      src={vlogImage.src}
-                      alt={vlogImage.alt}
-                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-
-                    {/* Play Button */}
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 text-white shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-yellow-400 group-hover:text-gray-950">
-                        <PlayCircle size={36} />
-                      </div>
-                    </div>
-
-                    {/* Views */}
-                    <div className="absolute bottom-5 right-5 rounded-full bg-black/30 px-4 py-2 text-sm font-semibold text-white backdrop-blur-md">
-                      <span className="inline-flex items-center gap-2">
-                        <Eye size={16} />
-                        {vlog.views.toLocaleString('en-IN')}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-7">
-                    <h3 className="text-2xl font-bold leading-snug text-gray-950 transition-colors group-hover:text-teal-700">
-                      {vlog.title}
-                    </h3>
-
-                    <div className="mt-6 flex items-center justify-between">
-                      <p className="text-sm text-gray-500">
-                        {new Date(vlog.date).toLocaleDateString('en-IN', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                        })}
-                      </p>
-
-                      <span className="inline-flex items-center gap-2 font-semibold text-teal-700 transition-transform duration-300 group-hover:translate-x-1">
-                        Play
-
-                        <ArrowRight size={18} />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              )
-            })}
-          </div>
+          <Vlogs />
         </div>
       </section>
 
