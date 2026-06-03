@@ -36,7 +36,7 @@ export function Footer() {
             <div className="space-y-2 text-sm text-gray-400">
               <div className="flex items-start gap-2">
                 <Mail size={16} className="mt-1 flex-shrink-0" />
-                <span>{ngoInfo.contact.email}</span>
+                <span className='break-all' >{ngoInfo.contact.email}</span>
               </div>
               <div className="flex items-start gap-2">
                 <Phone size={16} className="mt-1 flex-shrink-0" />
