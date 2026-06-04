@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { ngoInfo } from '@/lib/mockData'
 import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
+import { useGetFAQQuery } from '@/lib/services/master-api'
+import FAQSection from '@/components/contact/faq'
 
 export const metadata = {
   title: `Contact Us - ${ngoInfo.name}`,
@@ -8,6 +10,7 @@ export const metadata = {
 }
 
 export default function Contact() {
+
   return (
     <main>
       <section className="bg-gray-50 px-4 py-16 md:py-20">
@@ -107,6 +110,8 @@ export default function Contact() {
         </div>
       </section>
 
+
+
       <section className="bg-gray-50 px-4 py-16">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 rounded-lg border border-gray-200 bg-white p-8 shadow-sm md:flex-row md:items-center md:justify-between">
           <div>
@@ -123,6 +128,8 @@ export default function Contact() {
           </div>
         </div>
       </section>
+
+      <FAQSection />
 
     </main>
   )

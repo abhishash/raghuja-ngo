@@ -145,3 +145,25 @@ export interface VideosResponse {
   status: boolean;
   data: VideoItem[];
 }
+
+export interface BlogDataType {
+  id: number;
+  title: string;
+  slug: string;
+  short_description: string;
+  description: string;
+  author: string;
+  published_date: string;
+  image: string;
+}
+
+export interface BlogsResponseDataType {
+  status: boolean;
+  data: BlogDataType[];
+}
+
+
+export interface BlogsResponseDetailsDataType {
+  status: boolean;
+  data: BlogDataType;
+}

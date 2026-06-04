@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CMSData, CMSResponse, EventDetailsData, EventDetailsResponse, EventItem, EventsResponse, GalleryItem, GalleryResponse, VideoItem, VideosResponse } from "./service-types";
+import { BlogDataType, BlogsResponseDataType, BlogsResponseDetailsDataType, CMSData, CMSResponse, EventDetailsData, EventDetailsResponse, EventItem, EventsResponse, GalleryItem, GalleryResponse, VideoItem, VideosResponse } from "./service-types";
 const APIENDPOINT = process.env.API_ENDPOINT;
 
 export const eventsApi = createApi({
@@ -26,6 +26,22 @@ export const eventsApi = createApi({
                 method: "GET",
             }),
             transformResponse: (response: VideosResponse) => response?.data,
+        }),
+
+        getBlogs: builder.query<BlogDataType[], void>({
+            query: () => ({
+                url: `blogs`,
+                method: "GET",
+            }),
+            transformResponse: (response: BlogsResponseDataType) => response?.data,
+        }),
+
+        getBlogBySlug: builder.query<BlogDataType, string>({
+            query: (slug) => ({
+                url: `blogs/${slug}`,
+                method: "GET",
+            }),
+            transformResponse: (response: BlogsResponseDetailsDataType) => response?.data,
         }),
 
         getHomeUpComingEvent: builder.query<EventItem[], void>({
@@ -60,4 +76,4 @@ export const eventsApi = createApi({
     })
 })
 
-export const { useGetUpComingEventQuery, useGetHomeUpComingEventQuery, useGetVideosQuery, useRegisterForEventMutation, useGetEventByIdQuery } = eventsApi;
+export const { useGetUpComingEventQuery, useGetBlogsQuery, useGetBlogBySlugQuery, useGetHomeUpComingEventQuery, useGetVideosQuery, useRegisterForEventMutation, useGetEventByIdQuery } = eventsApi;

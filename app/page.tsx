@@ -21,6 +21,7 @@ import Image from 'next/image'
 import Campaigns from '@/components/campaign/campaigns'
 import EventsSection from '@/components/events/events-section'
 import Vlogs from '@/components/events/vlogs'
+import ServiceSection from '@/components/events/blog-section'
 
 export default async function Home() {
 
@@ -50,7 +51,7 @@ export default async function Home() {
       alt: 'People attending a social impact conference',
     },
   ]
-  
+
 
   return (
     <>
@@ -288,61 +289,8 @@ export default async function Home() {
           </div>
 
           {/* Cards */}
-          <div className="mt-20 grid gap-8 md:grid-cols-2 xl:grid-cols-3">
-            {services.map((service, index) => (
-              <Link
-                key={service.id}
-                href={`/services?id=${service.id}`}
-                className="group relative overflow-hidden rounded-[2rem] border border-white/30 bg-white/80 shadow-xl backdrop-blur-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl hover:shadow-teal-900/10"
-              >
-                {/* Image */}
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+          <ServiceSection />
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-
-                  {/* Icon */}
-                  <div className="absolute left-5 top-5 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 text-white shadow-xl backdrop-blur-md">
-                    <Heart size={28} />
-                  </div>
-
-                  {/* Impact Badge */}
-                  <div className="absolute bottom-5 left-5 rounded-full bg-teal-500 px-4 py-2 text-sm font-bold text-white shadow-xl">
-                    {service.impact}
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-7">
-                  <h3 className="text-2xl font-bold leading-snug text-gray-950 transition-colors duration-300 group-hover:text-teal-700">
-                    {service.title}
-                  </h3>
-
-                  <p className="mt-4 leading-relaxed text-gray-600">
-                    {service.description}
-                  </p>
-
-                  <div className="mt-8 flex items-center justify-between">
-                    <span className="text-sm font-semibold text-gray-500">
-                      Learn More
-                    </span>
-
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-teal-50 text-teal-700 transition-all duration-300 group-hover:bg-teal-600 group-hover:text-white">
-                      <ArrowRight size={20} />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Glow */}
-                <div className="absolute -right-16 -top-16 h-40 w-40 rounded-full bg-teal-200/40 blur-3xl"></div>
-              </Link>
-            ))}
-          </div>
         </div>
       </section>
 

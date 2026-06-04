@@ -30,6 +30,13 @@ export const masterApi = createApi({
             }),
             transformResponse: (response: CMSResponse) => response?.data,
         }),
+        getFAQ: builder.query<FAQItem[], void>({
+            query: () => ({
+                url: `faq`,
+                method: "GET",
+            }),
+            transformResponse: (response: FAQResponse) => response?.data,
+        }),
         getGallery: builder.query<GalleryItem[], void>({
             query: () => ({
                 url: `gallery`,
@@ -40,4 +47,4 @@ export const masterApi = createApi({
     })
 })
 
-export const { useGetCMSQuery, useGetGalleryQuery } = masterApi;
+export const { useGetCMSQuery, useGetGalleryQuery, useGetFAQQuery } = masterApi;
