@@ -39,7 +39,7 @@ export async function generateStaticParams() {
     
     return pages
         .map((page: any) => ({
-            urlkey: page.url === "/" ? "" : page?.url ?? "",
+            urlkey:  "privacy-policy" //page.url === "/" ? "" : page?.url ?? "",
         }))
         .filter((item) => item.urlkey);
 
