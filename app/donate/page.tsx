@@ -250,7 +250,7 @@ export default function Donate() {
                               {campaign.name}
                             </h3>
 
-                            <p className="mt-3 text-lg leading-relaxed text-gray-600">
+                            <p className="mt-3 text-lg line-clamp-3 leading-relaxed text-gray-600">
                               {campaign.description}
                             </p>
                           </div>

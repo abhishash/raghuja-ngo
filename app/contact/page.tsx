@@ -3,6 +3,7 @@ import { ngoInfo } from '@/lib/mockData'
 import { ArrowRight, Clock, Mail, MapPin, MessageCircle, Phone, Send } from 'lucide-react'
 import { useGetFAQQuery } from '@/lib/services/master-api'
 import FAQSection from '@/components/contact/faq'
+import ContactForm from '@/components/contact/contact-form'
 
 export const metadata = {
   title: `Contact Us - ${ngoInfo.name}`,
@@ -77,35 +78,7 @@ export default function Contact() {
             <h2 className="text-3xl font-bold text-gray-950">Send an enquiry</h2>
             <p className="mt-3 text-gray-600">This form is ready for UI use. Connect it to your API when the backend is available.</p>
 
-            <form className="mt-8 space-y-6">
-              <div className="grid gap-6 md:grid-cols-2">
-                <div>
-                  <label htmlFor="name" className="mb-2 block text-sm font-bold text-gray-800">Full Name</label>
-                  <input id="name" type="text" placeholder="Enter your name" className="w-full rounded border border-gray-300 px-4 py-3 outline-none transition focus:ring-2 focus:ring-teal-600" />
-                </div>
-                <div>
-                  <label htmlFor="mobile" className="mb-2 block text-sm font-bold text-gray-800">Mobile Number</label>
-                  <input id="mobile" type="tel" placeholder="Enter mobile number" className="w-full rounded border border-gray-300 px-4 py-3 outline-none transition focus:ring-2 focus:ring-teal-600" />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="subject" className="mb-2 block text-sm font-bold text-gray-800">Subject</label>
-                <select id="subject" className="w-full rounded border border-gray-300 px-4 py-3 outline-none transition focus:ring-2 focus:ring-teal-600">
-                  <option>Member registration help</option>
-                  <option>Donation enquiry</option>
-                  <option>Prosthetic support</option>
-                  <option>Volunteer or partnership</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div>
-                <label htmlFor="message" className="mb-2 block text-sm font-bold text-gray-800">Message</label>
-                <textarea id="message" rows={5} placeholder="Write your message" className="w-full resize-none rounded border border-gray-300 px-4 py-3 outline-none transition focus:ring-2 focus:ring-teal-600" />
-              </div>
-              <button type="button" className="inline-flex items-center gap-2 rounded bg-teal-600 px-6 py-3 font-bold text-white transition-colors hover:bg-teal-700">
-                Send Message <Send size={18} />
-              </button>
-            </form>
+            <ContactForm />
           </div>
         </div>
       </section>

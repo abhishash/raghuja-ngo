@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Campaign, CampaignDetailsResponse, CampaignResponse, CMSData, CMSResponse, CreateOrderPayload, DonationOrderData, DonationOrderResponse, GalleryItem, GalleryResponse, verifyPaymentPayload } from "./service-types";
+import { Campaign, CampaignDetailsResponse, CampaignResponse, CMSData, CMSResponse, CreateOrderPayload, DonationOrderData, DonationOrderResponse, GalleryItem, GalleryResponse, verifyPaymentPayload } from "./types";
 const APIENDPOINT = process.env.API_ENDPOINT;
 
 export const paymentApi = createApi({

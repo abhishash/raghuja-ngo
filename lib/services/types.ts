@@ -1,31 +1,31 @@
 export type CMSItem = {
-    id: number;
-    category: string;
-    name: string;
-    url: string;
+  id: number;
+  category: string;
+  name: string;
+  url: string;
 };
 
 export type CMSData = {
-    community: CMSItem[];
-    links: CMSItem[];
-    legal: CMSItem[];
+  community: CMSItem[];
+  links: CMSItem[];
+  legal: CMSItem[];
 };
 
 export type CMSResponse = {
-    status: boolean;
-    message: string;
-    data: CMSData;
+  status: boolean;
+  message: string;
+  data: CMSData;
 };
 
 export type GalleryItem = {
-    title: string;
-    link: string;
-    image: string;
+  title: string;
+  link: string;
+  image: string;
 };
 
 export type GalleryResponse = {
-    status: string;
-    data: GalleryItem[];
+  status: string;
+  data: GalleryItem[];
 };
 
 export type Campaign = {
@@ -53,11 +53,11 @@ export type CampaignDetailsResponse = {
 };
 
 export type CreateOrderPayload = {
-    campaign_id?: string;
-    name: string;
-    email: string;
-    phone: string;
-    amount: number;
+  campaign_id?: string;
+  name: string;
+  email: string;
+  phone: string;
+  amount: number;
 }
 
 export type verifyPaymentPayload = {
@@ -73,6 +73,13 @@ export type Prefill = {
   email: string;
   contact: string;
 };
+
+export type ContactDataTypes = {
+  name: string;
+  phone: string;
+  subject: string;
+  message: string;
+}
 
 export type DonationOrderData = {
   donation_id: number;
@@ -167,3 +174,31 @@ export interface BlogsResponseDetailsDataType {
   status: boolean;
   data: BlogDataType;
 }
+
+export type TeamMember = {
+  id: number;
+  name: string;
+  designation: string;
+  short_description: string;
+  highlight_text: string | null;
+  image: string;
+};
+
+export type TeamResponse = {
+  status: boolean;
+  data: TeamMember[];
+};
+
+export type EnquiryData = {
+  id: number;
+  name: string;
+  phone: string;
+  subject: string;
+  status: "pending" | "approved" | "rejected";
+};
+
+export type EnquiryResponse = {
+  status: boolean;
+  message: string;
+  data: EnquiryData;
+};

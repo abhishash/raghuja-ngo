@@ -246,7 +246,7 @@ export default function CampaignDetails({ id }: Props) {
                                                     {campaign.name}
                                                 </h2>
 
-                                                <p className="mt-3 max-w-2xl text-lg text-white/80">
+                                                <p title={campaign.description} className="mt-3 max-w-3xl line-clamp-4 text-lg text-white/80">
                                                     {campaign.description}
                                                 </p>
                                             </div>

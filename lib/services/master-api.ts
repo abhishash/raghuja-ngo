@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CMSData, CMSResponse, GalleryItem, GalleryResponse } from "./service-types";
+import { CMSData, CMSResponse, ContactDataTypes, EnquiryData, EnquiryResponse, EventItem, EventsResponse, GalleryItem, GalleryResponse, TeamMember, TeamResponse } from "./types";
 const APIENDPOINT = process.env.API_ENDPOINT;
 
 type FAQItem = {
@@ -44,7 +44,22 @@ export const masterApi = createApi({
             }),
             transformResponse: (response: GalleryResponse) => response?.data,
         }),
+        getTeams: builder.query<TeamMember[], void>({
+            query: () => ({
+                url: `teams`,
+                method: "GET",
+            }),
+            transformResponse: (response: TeamResponse) => response?.data,
+        }),
+        contactUs: builder.mutation<EnquiryData, ContactDataTypes>({
+            query: (body) => ({
+                url: `contact-enquiry`,
+                method: "POST",
+                body: { ...body }
+            }),
+            transformResponse: (response: EnquiryResponse) => response?.data,
+        }),
     })
 })
 
-export const { useGetCMSQuery, useGetGalleryQuery, useGetFAQQuery } = masterApi;
+export const { useGetCMSQuery, useGetGalleryQuery, useGetFAQQuery, useGetTeamsQuery, useContactUsMutation } = masterApi;

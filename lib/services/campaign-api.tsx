@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Campaign, CampaignDetailsResponse, CampaignResponse, CMSData, CMSResponse, GalleryItem, GalleryResponse } from "./service-types";
+import { Campaign, CampaignDetailsResponse, CampaignResponse, CMSData, CMSResponse, GalleryItem, GalleryResponse } from "./types";
 const APIENDPOINT = process.env.API_ENDPOINT;
 
 export const campaignApi = createApi({
