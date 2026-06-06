@@ -36,10 +36,10 @@ export async function generateStaticParams() {
 
     const cmsurl = res?.data;
     const pages = Object.values(cmsurl).flat();
-    
+
     return pages
         .map((page: any) => ({
-            urlkey:  "privacy-policy" //page.url === "/" ? "" : page?.url ?? "",
+            urlkey: page.url === "/" ? "" : page?.url ?? "",
         }))
         .filter((item) => item.urlkey);
 

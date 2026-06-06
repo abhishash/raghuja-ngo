@@ -10,7 +10,7 @@ const Campaigns = () => {
     if (isLoading) {
         return <CampaignsSkeleton />
     }
-    
+
     return (
         <div className="grid gap-8 lg:grid-cols-3">
             {campaigns?.map((campaign, index) => {
@@ -67,7 +67,7 @@ const Campaigns = () => {
                                 {campaign.name}
                             </h3>
 
-                            <p className="mt-4 text-[15px] leading-relaxed text-gray-600">
+                            <p className="mt-4 text-[15px] line-clamp-4 leading-relaxed text-gray-600">
                                 {campaign.description}
                             </p>
 
