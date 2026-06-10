@@ -171,9 +171,7 @@ export default function Checkout() {
 
           if (isObject(verifyResponse)) {
             router.push(
-              `/donate/success?donationId=${response.receipt}&transactionId=${paymentResponse.razorpay_payment_id}&amount=${donationAmount}&campaign=${response.campaign_id}&donor=${encodeURIComponent(
-                donorName
-              )}`
+              `/donate/success?receipt=${encodeURIComponent(response.receipt)}&campaign=${encodeURIComponent(response.campaign_id)}`
             )
           }
         },

@@ -202,3 +202,118 @@ export type EnquiryResponse = {
   message: string;
   data: EnquiryData;
 };
+
+// ==========================================
+// ROOT RESPONSE
+// ==========================================
+
+export type ReceiptResponse = {
+  status: boolean
+  message: string
+  data: ReceiptData
+}
+
+// ==========================================
+// MAIN DATA
+// ==========================================
+
+export type ReceiptData = {
+  document_type: string
+  donation: Donation
+  campaign: {
+    id: number
+    name: string
+    progress_percentage: number
+  }
+  user: ReceiptUser
+  notes: ReceiptNotes
+}
+
+// ==========================================
+// DONATION
+// ==========================================
+
+export type Donation = {
+  donation_id: number
+  campaign_id: number
+  user_id: number
+
+  name: string
+  email: string
+  phone: string
+
+  amount: string
+  currency: string
+
+  receipt: string
+
+  payment_status: string
+  status: string
+
+  razorpay_order_id: string
+  razorpay_payment_id: string | null
+
+  paid_at: string | null
+  created_at: string
+}
+
+
+// ==========================================
+// USER
+// ==========================================
+
+export type ReceiptUser = {
+  id: number
+  name: string
+  email: string
+  phone: string
+}
+
+// ==========================================
+// NOTES
+// ==========================================
+
+export type ReceiptNotes = {
+  campaign_name: string
+  razorpay_order: RazorpayOrder
+}
+
+// ==========================================
+// RAZORPAY ORDER
+// ==========================================
+
+export type RazorpayOrder = {
+  amount: number
+  amount_due: number
+  amount_paid: number
+  attempts: number
+
+  created_at: number
+
+  currency: string
+  entity: string
+
+  id: string
+
+  notes: RazorpayOrderNotes
+
+  offer_id: string | null
+
+  receipt: string
+  status: string
+}
+
+// ==========================================
+// RAZORPAY ORDER NOTES
+// ==========================================
+
+export type RazorpayOrderNotes = {
+  campaign_id: string
+  campaign_name: string
+
+  donation_id: string
+
+  donor_email: string
+  donor_name: string
+  donor_phone: string
+}

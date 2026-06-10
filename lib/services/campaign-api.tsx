@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Campaign, CampaignDetailsResponse, CampaignResponse, CMSData, CMSResponse, GalleryItem, GalleryResponse } from "./types";
+import { Campaign, CampaignDetailsResponse, CampaignResponse, CMSData, CMSResponse, GalleryItem, GalleryResponse, ReceiptData, ReceiptResponse } from "./types";
 const APIENDPOINT = process.env.API_ENDPOINT;
 
 export const campaignApi = createApi({
@@ -27,8 +27,17 @@ export const campaignApi = createApi({
             }),
             transformResponse: (response: CampaignDetailsResponse) => response?.data,
         }),
-        
+
+        getReceiptByid: builder.query<ReceiptData, string>({
+            query: (id) => ({
+                // url: `donations/ngo_5HNQMBYWBB/receipt`,
+                url: `donations/${id}/receipt`,
+                method: "GET",
+            }),
+            transformResponse: (response: ReceiptResponse) => response?.data,
+        }),
+
     })
 })
 
-export const { useGetCampaignsQuery, useGetCampaignByidQuery } = campaignApi;
+export const { useGetCampaignsQuery, useGetCampaignByidQuery, useGetReceiptByidQuery } = campaignApi;
