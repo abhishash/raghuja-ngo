@@ -84,7 +84,7 @@ const Vlogs = () => {
         return (
           <Link
             key={vlog.id}
-            href={vlog.video_url}
+            href={vlog?.video_url ?? ""}
             target="_blank"
             className="group overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
           >
