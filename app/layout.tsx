@@ -38,7 +38,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <body
+      <body 
       // className={`${poppins.className} font-sans antialiased`}
       >
         <ReduxProvider>
