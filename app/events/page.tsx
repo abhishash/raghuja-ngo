@@ -13,9 +13,15 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import { useGetGalleryQuery } from '@/lib/services/master-api'
+import VideoModal from '@/components/events/modal/VideoModal'
+import { imageBaseUrl } from '@/lib/constants'
+import { useState } from 'react'
+import { useGetVideosQuery } from '@/lib/services/events-api'
 
 export default function Events() {
   const { data: galleryData, isLoading } = useGetGalleryQuery();
+  const { data: vlogs, isLoading: isBlogLoading } = useGetVideosQuery();
+  const [selectedVideo, setSelectedVideo] = useState("");
 
 
   return (
@@ -164,19 +170,16 @@ export default function Events() {
             </div>
 
             <div className="mt-20 grid gap-8 md:grid-cols-2">
-              {vlogs.map((vlog) => (
+              {vlogs?.map((vlog) => (
                 <div
                   key={vlog.id}
+                  onClick={() => setSelectedVideo(vlog?.video_url ?? `${imageBaseUrl}${vlog?.video_file}`)}
                   className="group overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl"
                 >
                   {/* Thumbnail */}
                   <div className="relative h-72 overflow-hidden">
                     <Image
-                      src={
-                        vlog.thumbnail
-                        // ||
-                        // `https://img.youtube.com/vi/${vlog.videoId}/maxresdefault.jpg`
-                      }
+                      src={`${imageBaseUrl}${vlog.thumbnail}`}
                       alt={vlog.title}
                       fill
                       className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -201,38 +204,16 @@ export default function Events() {
                     <h3 className="text-2xl font-bold text-gray-950">
                       {vlog.title}
                     </h3>
-
-                    <div className="mt-5 flex items-center justify-between">
-                      <div>
-                        <p className="text-gray-500">
-                          {new Date(vlog.date).toLocaleDateString(
-                            'en-US',
-                            {
-                              month: 'long',
-                              day: 'numeric',
-                              year: 'numeric',
-                            }
-                          )}
-                        </p>
-
-                        <p className="mt-1 font-semibold text-teal-700">
-                          {vlog.views.toLocaleString()} views
-                        </p>
-                      </div>
-
-                      <a
-                        href={`https://youtube.com/watch?v=${vlog.videoId}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="rounded-2xl bg-teal-600 px-6 py-3 font-semibold text-white shadow-lg transition-all duration-300 hover:bg-teal-700"
-                      >
-                        Watch
-                      </a>
-                    </div>
                   </div>
                 </div>
               ))}
             </div>
+
+            <VideoModal
+              isOpen={!!selectedVideo}
+              videoUrl={selectedVideo}
+              onClose={() => setSelectedVideo("")}
+            />
           </div>
         </div>
       </section>
@@ -299,7 +280,7 @@ export default function Events() {
 
                 {/* Content */}
                 <div className="absolute bottom-6 left-6">
-                 
+
 
                   <h3
                     className={`mt-2 font-bold text-white ${index === 0 || index === 5
