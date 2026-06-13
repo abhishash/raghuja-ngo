@@ -10,6 +10,8 @@ import {
 
 import { imageBaseUrl } from "@/lib/constants";
 import { useGetVideosQuery } from "@/lib/services/events-api";
+import VideoModal from "./modal/VideoModal";
+import { useState } from "react";
 
 const VlogCardSkeleton = () => {
   return (
@@ -37,6 +39,7 @@ const VlogCardSkeleton = () => {
 };
 
 const Vlogs = () => {
+  const [selectedVideo, setSelectedVideo] = useState("");
 
   const { data: vlogs, isLoading } = useGetVideosQuery();
 
@@ -78,56 +81,54 @@ const Vlogs = () => {
   }
 
   return (
-    <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
+    <>
+      <div className="grid gap-8 md:grid-cols-2 xl:grid-cols-3">
 
-      {latestVlogs.map((vlog) => {
-        return (
-          <Link
-            key={vlog.id}
-            href={vlog?.video_url ?? ""}
-            target="_blank"
-            className="group overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
-          >
+        {latestVlogs.map((vlog) => {
+          return (
+            <div
+              key={vlog.id}
+              onClick={() => setSelectedVideo(vlog.video_url ?? `${imageBaseUrl}${vlog.video_file}`)}
+              className="group overflow-hidden rounded-[2rem] border border-white/30 bg-white shadow-xl transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
+            >
 
-            {/* Thumbnail */}
-            <div className="relative aspect-video overflow-hidden">
+              {/* Thumbnail */}
+              <div className="relative aspect-video overflow-hidden">
 
-              <Image
-                src={`${imageBaseUrl}${vlog.thumbnail}`}
-                alt={vlog.title}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110"
-              />
+                <Image
+                  src={`${imageBaseUrl}${vlog.thumbnail}`}
+                  alt={vlog.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
 
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
 
-              {/* Play Button */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 text-white shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-yellow-400 group-hover:text-gray-950">
-                  <PlayCircle size={36} />
+                {/* Play Button */}
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="flex h-20 w-20 items-center justify-center rounded-full bg-white/20 text-white shadow-2xl backdrop-blur-md transition-all duration-300 group-hover:scale-110 group-hover:bg-yellow-400 group-hover:text-gray-950">
+                    <PlayCircle size={36} />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Content */}
-            <div className="p-7">
-
-              <h3 className="text-2xl font-bold leading-snug text-gray-950 transition-colors group-hover:text-teal-700">
-                {vlog.title}
-              </h3>
-
-              <div className="mt-6 flex items-center justify-between">
-                <span className="inline-flex items-center gap-2 font-semibold text-teal-700 transition-transform duration-300 group-hover:translate-x-1">
-                  Play
-
-                  <ArrowRight size={18} />
-                </span>
+              {/* Content */}
+              <div className="p-7">
+                <h3 className="text-2xl font-bold leading-snug text-gray-950 transition-colors group-hover:text-teal-700">
+                  {vlog.title}
+                </h3>
               </div>
             </div>
-          </Link>
-        );
-      })}
-    </div>
+          );
+        })}
+      </div>
+      <VideoModal
+        isOpen={!!selectedVideo}
+        videoUrl={selectedVideo}
+        onClose={() => setSelectedVideo("")}
+      />
+    </>
+
   );
 };
 
