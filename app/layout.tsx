@@ -5,6 +5,7 @@ import { Navbar } from '@/components/Navbar'
 import { Footer } from '@/components/Footer'
 import { Poppins } from 'next/font/google';
 import ReduxProvider from '@/components/providers/redux-provider'
+import { Toaster } from 'sonner'
 const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
 
 
@@ -47,6 +48,7 @@ export default function RootLayout({
             {children}
             {process.env.NODE_ENV === 'production' && <Analytics />}
             <Footer />
+             <Toaster closeButton richColors />
           </main>
         </ReduxProvider>
       </body>

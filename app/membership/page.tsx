@@ -11,10 +11,13 @@ import {
   Home,
   Loader2,
   LockKeyhole,
+  MailIcon,
   Phone,
   ShieldCheck,
   UserRound,
 } from 'lucide-react'
+import { useCreateRegistrationMutation } from '@/lib/services/registration-api'
+import { toast } from 'sonner'
 
 interface FormData {
   name: string
@@ -22,6 +25,7 @@ interface FormData {
   address: string
   idProofType: string
   idProofNumber: string
+  email: string;
 }
 
 const idProofOptions = [
@@ -36,6 +40,7 @@ const idProofOptions = [
 export default function Membership() {
   const [formData, setFormData] = useState<FormData>({
     name: '',
+    email: "",
     mobile: '',
     address: '',
     idProofType: '',
@@ -56,6 +61,7 @@ export default function Membership() {
     const newErrors: Record<string, string> = {}
 
     if (!formData.name.trim()) newErrors.name = 'Full name is required'
+    if (!formData.email.trim()) newErrors.email = 'Email is required'
     if (!formData.mobile.trim()) newErrors.mobile = 'Mobile number is required'
     else if (!isValidPhone(formData.mobile)) newErrors.mobile = 'Enter a valid 10 digit mobile number'
     if (!formData.address.trim()) newErrors.address = 'Address is required'
@@ -92,56 +98,45 @@ export default function Membership() {
     }
   }
 
-  const handleSendOtp = () => {
-    if (!isValidPhone(formData.mobile)) {
-      setErrors((prev) => ({
-        ...prev,
-        mobile: 'Enter a valid mobile number before sending OTP',
-      }))
-      return
-    }
-
-    const generatedOtp = Math.floor(100000 + Math.random() * 900000).toString()
-    setDemoOtp(generatedOtp)
-    setOtpSent(true)
-    setOtpVerified(false)
-    setOtp('')
-    setErrors((prev) => ({
-      ...prev,
-      otp: '',
-    }))
-  }
-
-  const handleVerifyOtp = () => {
-    if (otp === demoOtp) {
-      setOtpVerified(true)
-      setErrors((prev) => ({
-        ...prev,
-        otp: '',
-      }))
-      return
-    }
-
-    setErrors((prev) => ({
-      ...prev,
-      otp: 'Incorrect OTP. Use the demo code shown above.',
-    }))
-  }
+  const [createRegistration, { isLoading }] = useCreateRegistrationMutation();
 
   const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
-    if (!validateForm()) return
+    event.preventDefault();
 
-    setLoading(true)
+    if (!validateForm()) return;
+
     try {
-      await new Promise((resolve) => setTimeout(resolve, 900))
-      const newMemberId = generateMemberId()
-      setMemberId(newMemberId)
-      setSubmitted(true)
-    } finally {
-      setLoading(false)
+      const response = await createRegistration({
+        name: formData.name,
+        email: formData.email,
+        phone: formData.mobile,
+        address: formData.address,
+        id_proof_type: formData.idProofType,
+        id_proof_number: formData.idProofNumber,
+      }).unwrap();
+
+      if (response) {
+        toast.success("Registration successfully created");
+      } else {
+        toast.error("Something went wrong. Please try again!");
+      }
+
+    } catch (err: any) {
+      const validationErrors = err?.data?.errors;
+
+      if (validationErrors) {
+        Object.keys(validationErrors).forEach((field) => {
+          const message = validationErrors[field]?.[0];
+          if (message) {
+            toast.error(message);
+          }
+        });
+      } else {
+        toast.error("Something went wrong. Please try again!");
+      }
+
     }
-  }
+  };
 
   const handleDownloadIdCard = async () => {
     try {
@@ -258,12 +253,12 @@ export default function Membership() {
                 >
                   Download ID Card
                 </button>
-                <Link
+                {/* <Link
                   href="/membership/dashboard"
                   className="rounded border-2 border-teal-600 px-5 py-3 font-semibold text-teal-700 transition-colors hover:bg-teal-50"
                 >
                   View Dashboard
-                </Link>
+                </Link> */}
               </div>
 
               <Link
@@ -316,15 +311,33 @@ export default function Membership() {
                         type="text"
                         value={formData.name}
                         onChange={handleInputChange}
-                        className={`w-full rounded border px-12 py-3 outline-none transition focus:ring-2 focus:ring-teal-600 ${errors.name ? 'border-red-500' : 'border-gray-300'
-                          }`}
+                        className={`w-full rounded border px-12 py-3 outline-none transition focus:ring-2 focus:ring-teal-600 ${errors.name ? 'border-red-500' : 'border-gray-300'}`}
                         placeholder="Enter full name"
                       />
                     </div>
                     {errors.name && <p className="mt-2 text-sm font-medium text-red-600">{errors.name}</p>}
                   </div>
+                  <div className=''>
+                    <label htmlFor="name" className="mb-2 block text-sm font-bold text-gray-800">
+                      Email *
+                    </label>
+                    <div className="relative">
+                      <MailIcon className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className={`w-full rounded border px-12 py-3 outline-none transition focus:ring-2 focus:ring-teal-600 ${errors.email ? 'border-red-500' : 'border-gray-300'
+                          }`}
+                        placeholder="Enter Email"
+                      />
+                    </div>
+                    {errors.email && <p className="mt-2 text-sm font-medium text-red-600">{errors.email}</p>}
+                  </div>
 
-                  <div>
+                  <div className='col-span-2'>
                     <label htmlFor="mobile" className="mb-2 block text-sm font-bold text-gray-800">
                       Mobile Number *
                     </label>
@@ -409,92 +422,26 @@ export default function Membership() {
                   </div>
                 </div>
 
-                <div className="rounded-lg border border-gray-200 bg-gray-50 p-5">
-                  <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                    <div>
-                      <p className="flex items-center gap-2 font-bold text-gray-900">
-                        <ShieldCheck size={20} className="text-teal-600" />
-                        OTP verification
-                      </p>
-                      <p className="mt-1 text-sm text-gray-600">Optional mobile verification before registration.</p>
-                    </div>
-                    <label className="inline-flex cursor-pointer items-center gap-3">
-                      <input
-                        type="checkbox"
-                        checked={otpEnabled}
-                        onChange={(event) => {
-                          setOtpEnabled(event.target.checked)
-                          setOtpSent(false)
-                          setOtpVerified(false)
-                          setOtp('')
-                          setDemoOtp('')
-                          setErrors((prev) => ({ ...prev, otp: '' }))
-                        }}
-                        className="h-5 w-5 rounded border-gray-300 text-teal-600"
-                      />
-                      <span className="font-semibold text-gray-800">Enable OTP</span>
-                    </label>
-                  </div>
-
-                  {otpEnabled && (
-                    <div className="mt-5 rounded border border-gray-200 bg-white p-4">
-                      <div className="grid gap-3 md:grid-cols-[auto_1fr_auto] md:items-center">
-                        <button
-                          type="button"
-                          onClick={handleSendOtp}
-                          className="rounded bg-teal-600 px-5 py-3 font-semibold text-white transition-colors hover:bg-teal-700"
-                        >
-                          {otpSent ? 'Resend OTP' : 'Send OTP'}
-                        </button>
-                        <input
-                          type="text"
-                          value={otp}
-                          onChange={(event) => setOtp(event.target.value.replace(/\D/g, '').slice(0, 6))}
-                          disabled={!otpSent || otpVerified}
-                          className="rounded border border-gray-300 px-4 py-3 outline-none transition focus:ring-2 focus:ring-teal-600 disabled:bg-gray-100"
-                          placeholder="Enter 6 digit OTP"
-                        />
-                        <button
-                          type="button"
-                          onClick={handleVerifyOtp}
-                          disabled={!otpSent || otp.length !== 6 || otpVerified}
-                          className="rounded border-2 border-teal-600 px-5 py-3 font-semibold text-teal-700 transition-colors hover:bg-teal-50 disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                          {otpVerified ? 'Verified' : 'Verify'}
-                        </button>
-                      </div>
-
-                      {otpSent && !otpVerified && (
-                        <p className="mt-3 text-sm text-gray-600">
-                          Demo OTP: <span className="font-bold text-gray-900">{demoOtp}</span>
-                        </p>
-                      )}
-                      {otpVerified && <p className="mt-3 text-sm font-semibold text-teal-700">Mobile number verified.</p>}
-                      {errors.otp && <p className="mt-3 text-sm font-medium text-red-600">{errors.otp}</p>}
-                    </div>
-                  )}
-                </div>
-
                 <div className="rounded-lg bg-yellow-50 p-4 text-sm text-yellow-900">
                   By registering, you agree to receive membership updates, camp details, and program communication from the foundation.
                 </div>
 
                 <button
                   type="submit"
-                  disabled={loading}
+                  disabled={isLoading}
                   className="flex w-full items-center justify-center gap-2 rounded bg-yellow-500 px-6 py-4 font-bold text-white transition-colors hover:bg-yellow-600 disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {loading && <Loader2 className="animate-spin" size={20} />}
-                  {loading ? 'Creating membership...' : 'Complete Registration'}
+                  {isLoading && <Loader2 className="animate-spin" size={20} />}
+                  {isLoading ? 'Creating membership...' : 'Complete Registration'}
                 </button>
               </form>
 
-              <p className="mt-6 text-center text-sm text-gray-600">
+              {/* <p className="mt-6 text-center text-sm text-gray-600">
                 Already registered?{' '}
                 <Link href="/membership/dashboard" className="font-bold text-teal-700 hover:text-teal-800">
                   View dashboard
                 </Link>
-              </p>
+              </p> */}
             </div>
           </div>
         </section>
