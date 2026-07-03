@@ -18,7 +18,8 @@ export const registrationApi = createApi({
             phone: string,
             address: string,
             id_proof_type: string,
-            id_proof_number: string
+            id_proof_number: string,
+            id_proof_file: File | null,
         }>({
             query: (body) => ({
                 url: `/membership/register`,

@@ -14,6 +14,7 @@ import {
   MailIcon,
   Phone,
   ShieldCheck,
+  UploadCloud,
   UserRound,
 } from 'lucide-react'
 import { useCreateRegistrationMutation } from '@/lib/services/registration-api'
@@ -26,6 +27,7 @@ interface FormData {
   idProofType: string
   idProofNumber: string
   email: string;
+  idProofFile: File | null
 }
 
 const idProofOptions = [
@@ -45,6 +47,8 @@ export default function Membership() {
     address: '',
     idProofType: '',
     idProofNumber: '',
+    idProofFile: null as File | null,
+
   })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
@@ -58,20 +62,56 @@ export default function Membership() {
   const [demoOtp, setDemoOtp] = useState('')
 
   const validateForm = () => {
-    const newErrors: Record<string, string> = {}
+    const newErrors: Record<string, string> = {};
 
-    if (!formData.name.trim()) newErrors.name = 'Full name is required'
-    if (!formData.email.trim()) newErrors.email = 'Email is required'
-    if (!formData.mobile.trim()) newErrors.mobile = 'Mobile number is required'
-    else if (!isValidPhone(formData.mobile)) newErrors.mobile = 'Enter a valid 10 digit mobile number'
-    if (!formData.address.trim()) newErrors.address = 'Address is required'
-    if (!formData.idProofType) newErrors.idProofType = 'Select an ID proof type'
-    if (!formData.idProofNumber.trim()) newErrors.idProofNumber = 'ID proof number is required'
-    if (otpEnabled && !otpVerified) newErrors.otp = 'Please verify OTP or turn off OTP verification'
+    if (!formData.name.trim())
+      newErrors.name = "Full name is required";
 
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+    if (!formData.email.trim())
+      newErrors.email = "Email is required";
+
+    if (!formData.mobile.trim())
+      newErrors.mobile = "Mobile number is required";
+    else if (!isValidPhone(formData.mobile))
+      newErrors.mobile = "Enter a valid 10 digit mobile number";
+
+    if (!formData.address.trim())
+      newErrors.address = "Address is required";
+
+    if (!formData.idProofType)
+      newErrors.idProofType = "Select an ID proof type";
+
+    if (!formData.idProofNumber.trim())
+      newErrors.idProofNumber = "ID proof number is required";
+
+    // ID Proof File Validation
+    if (!formData.idProofFile) {
+      newErrors.idProofFile = "Please upload your ID proof";
+    } else {
+      const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "application/pdf",
+      ];
+
+      if (!allowedTypes.includes(formData.idProofFile.type)) {
+        newErrors.idProofFile =
+          "Only JPG, PNG and PDF files are allowed";
+      }
+
+      const maxSize = 5 * 1024 * 1024; // 5 MB
+      if (formData.idProofFile.size > maxSize) {
+        newErrors.idProofFile = "File size must be less than 5MB";
+      }
+    }
+
+    if (otpEnabled && !otpVerified)
+      newErrors.otp = "Please verify OTP or turn off OTP verification";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -106,35 +146,45 @@ export default function Membership() {
     if (!validateForm()) return;
 
     try {
-      const response = await createRegistration({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.mobile,
-        address: formData.address,
-        id_proof_type: formData.idProofType,
-        id_proof_number: formData.idProofNumber,
-      }).unwrap();
+      const form = new FormData();
+
+      form.append("name", formData.name);
+      form.append("email", formData.email);
+      form.append("phone", formData.mobile);
+      form.append("address", formData.address);
+      form.append("id_proof_type", formData.idProofType);
+      form.append("id_proof_number", formData.idProofNumber);
+
+      if (formData.idProofFile) {
+        form.append("id_proof_file", formData.idProofFile);
+      }
+
+      const response = await createRegistration(form as any).unwrap();
 
       if (response) {
         toast.success("Registration successfully created");
+        setFormData({
+          name: '',
+          email: "",
+          mobile: '',
+          address: '',
+          idProofType: '',
+          idProofNumber: '',
+          idProofFile: null
+        })
       } else {
         toast.error("Something went wrong. Please try again!");
       }
-
     } catch (err: any) {
       const validationErrors = err?.data?.errors;
 
       if (validationErrors) {
         Object.keys(validationErrors).forEach((field) => {
-          const message = validationErrors[field]?.[0];
-          if (message) {
-            toast.error(message);
-          }
+          toast.error(validationErrors[field][0]);
         });
       } else {
         toast.error("Something went wrong. Please try again!");
       }
-
     }
   };
 
@@ -379,16 +429,21 @@ export default function Membership() {
                 </div>
 
                 <div className="grid gap-6 md:grid-cols-2">
+                  {/* ID Proof Type */}
                   <div>
-                    <label htmlFor="idProofType" className="mb-2 block text-sm font-bold text-gray-800">
+                    <label
+                      htmlFor="idProofType"
+                      className="mb-2 block text-sm font-bold text-gray-800"
+                    >
                       ID Proof Type *
                     </label>
+
                     <select
                       id="idProofType"
                       name="idProofType"
                       value={formData.idProofType}
                       onChange={handleInputChange}
-                      className={`w-full rounded border px-4 py-3 outline-none transition focus:ring-2 focus:ring-teal-600 ${errors.idProofType ? 'border-red-500' : 'border-gray-300'
+                      className={`w-full rounded border px-4 py-3 outline-none transition focus:ring-2 focus:ring-teal-600 ${errors.idProofType ? "border-red-500" : "border-gray-300"
                         }`}
                     >
                       <option value="">Select ID proof</option>
@@ -398,28 +453,101 @@ export default function Membership() {
                         </option>
                       ))}
                     </select>
-                    {errors.idProofType && <p className="mt-2 text-sm font-medium text-red-600">{errors.idProofType}</p>}
+
+                    {errors.idProofType && (
+                      <p className="mt-2 text-sm font-medium text-red-600">
+                        {errors.idProofType}
+                      </p>
+                    )}
                   </div>
 
+                  {/* ID Proof Number */}
                   <div>
-                    <label htmlFor="idProofNumber" className="mb-2 block text-sm font-bold text-gray-800">
+                    <label
+                      htmlFor="idProofNumber"
+                      className="mb-2 block text-sm font-bold text-gray-800"
+                    >
                       ID Proof Number *
                     </label>
+
                     <div className="relative">
-                      <FileText className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                      <FileText
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                        size={20}
+                      />
                       <input
                         id="idProofNumber"
                         name="idProofNumber"
                         type="text"
                         value={formData.idProofNumber}
                         onChange={handleInputChange}
-                        className={`w-full rounded border px-12 py-3 outline-none transition focus:ring-2 focus:ring-teal-600 ${errors.idProofNumber ? 'border-red-500' : 'border-gray-300'
+                        className={`w-full rounded border px-12 py-3 outline-none transition focus:ring-2 focus:ring-teal-600 ${errors.idProofNumber ? "border-red-500" : "border-gray-300"
                           }`}
                         placeholder="Enter ID proof number"
                       />
                     </div>
-                    {errors.idProofNumber && <p className="mt-2 text-sm font-medium text-red-600">{errors.idProofNumber}</p>}
+
+                    {errors.idProofNumber && (
+                      <p className="mt-2 text-sm font-medium text-red-600">
+                        {errors.idProofNumber}
+                      </p>
+                    )}
                   </div>
+                </div>
+
+                {/* File Upload */}
+                <div className="mt-6">
+                  <label
+                    htmlFor="idProofFile"
+                    className="mb-2 block text-sm font-bold text-gray-800"
+                  >
+                    Upload ID Proof *
+                  </label>
+
+                  <label
+                    htmlFor="idProofFile"
+                    className={`flex cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed p-8 transition hover:border-teal-600 hover:bg-teal-50 ${errors.idProofFile ? "border-red-500" : "border-gray-300"
+                      }`}
+                  >
+                    <UploadCloud className="mb-3 text-teal-600" size={40} />
+
+                    <span className="text-sm font-semibold text-gray-700">
+                      Click to upload or drag & drop
+                    </span>
+
+                    <span className="mt-1 text-xs text-gray-500">
+                      JPG, PNG, PDF (Max 5MB)
+                    </span>
+
+                    {formData.idProofFile && (
+                      <span className="mt-3 rounded bg-teal-100 px-3 py-1 text-sm text-teal-700">
+                        {formData.idProofFile.name}
+                      </span>
+                    )}
+                  </label>
+
+                  <input
+                    id="idProofFile"
+                    name="idProofFile"
+                    type="file"
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    className="hidden"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        setFormData((prev) => ({
+                          ...prev,
+                          idProofFile: file,
+                        }));
+                      }
+                    }}
+                  />
+
+                  {errors.idProofFile && (
+                    <p className="mt-2 text-sm font-medium text-red-600">
+                      {errors.idProofFile}
+                    </p>
+                  )}
                 </div>
 
                 <div className="rounded-lg bg-yellow-50 p-4 text-sm text-yellow-900">
