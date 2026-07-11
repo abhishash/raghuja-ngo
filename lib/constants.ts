@@ -1,4 +1,4 @@
-export const imageBaseUrl = process.env.ASSET_ENDPOINS;
+export const imageBaseUrl = process.env.ASSET_ENDPOINT;
 export const imageNotFound = '/logo/website-logo.png';
 
 export const HOMEPAGE_SLIDERS = {
